@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ArrangementController;
 use App\Livewire\Arrangements\ListArrangements;
+use App\Livewire\Arrangements\ShowArrangement;
 use Illuminate\Support\Facades\Route;
 
 Route::name('arrangements.')
@@ -9,7 +9,7 @@ Route::name('arrangements.')
         Route::get('/', ListArrangements::class)
             ->middleware(['auth', 'verified'])
             ->name('index');
-        Route::get('arrangements/{arrangement}', [ArrangementController::class, 'show'])
+        Route::get('arrangements/{arrangement}', ShowArrangement::class)
             ->middleware(['auth', 'verified'])
             ->name('show');
 });

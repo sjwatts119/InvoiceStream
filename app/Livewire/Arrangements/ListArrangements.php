@@ -22,7 +22,7 @@ class ListArrangements extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
-        return view('livewire.pages.arrangements')
+        return view('livewire.pages.arrangements.index')
             ->with('arrangements', $this->getArrangements);
     }
 }
