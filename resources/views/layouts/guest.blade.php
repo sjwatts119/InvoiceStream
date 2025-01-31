@@ -16,13 +16,13 @@
     @fluxStyles
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white dark:bg-zinc-800">
+<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-white dark:bg-zinc-900">
     <div>
         <a href="/" wire:navigate>
             <x-application-logo class="w-20 h-20 fill-current text-zinc-500"/>
         </a>
     </div>
-    <flux:card class="mt-6 w-full sm:max-w-md">
+    <flux:card class="mt-6 w-full sm:max-w-md !bg-zinc-800">
         {{ $slot }}
     </flux:card>
 </div>

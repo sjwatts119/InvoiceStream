@@ -26,7 +26,11 @@ new class extends Component {
     </flux:brand>
 
     <flux:navbar class="max-lg:hidden ml-6">
-        <flux:navbar.item icon="home" href="{{route('dashboard')}}">{{__('Dashboard')}}</flux:navbar.item>
+        <flux:navbar.item icon="home"
+                          :current="request()->routeIs('arrangements.*')"
+                          href="{{ route('arrangements.index') }}">
+            {{ __('Arrangements')}}
+        </flux:navbar.item>
     </flux:navbar>
 
     <flux:spacer/>
@@ -58,15 +62,18 @@ new class extends Component {
         </flux:brand>
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="home" href="{{route('dashboard')}}">
-                {{__('Dashboard')}}
+            <flux:navlist.item icon="home"
+                               href="{{ route('arrangements.index') }}">
+                {{__('Arrangements')}}
             </flux:navlist.item>
         </flux:navlist>
 
         <flux:spacer/>
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="user" href="{{route('profile')}}" wire:navigate>
+            <flux:navlist.item icon="user"
+                               :current="request()->routeIs('profile')"
+                               href="{{ route('profile') }}" wire:navigate>
                 {{__('Profile')}}
             </flux:navlist.item>
             <flux:navlist.item icon="arrow-right-end-on-rectangle" wire:click="logout()">
