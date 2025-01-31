@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('arrangements', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('user_id')->constrained('users', 'id');
+            $table->string('description')->nullable();
+            $table->string('currency');
             $table->float('rate')->nullable();
             $table->string('name');
             $table->timestamps();

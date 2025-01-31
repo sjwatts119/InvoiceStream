@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Cknow\Money\Money;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Money\Currency;
+use function Pest\Laravel\get;
 
 class Entry extends Model
 {
@@ -29,5 +33,12 @@ class Entry extends Model
     public function arrangement(): BelongsTo
     {
         return $this->belongsTo(Arrangement::class);
+    }
+
+    public function earned(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Money::parseByDecimal($this->hours * $this->rate, $this->arrangement->currency),
+        );
     }
 }

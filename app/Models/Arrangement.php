@@ -16,6 +16,8 @@ class Arrangement extends Model
     protected $fillable = [
         'id',
         'user_id',
+        'description',
+        'currency',
         'rate',
         'name',
     ];

@@ -13,6 +13,7 @@ class ArrangementFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
+            'currency' => 'GBP',
             'rate' => $this->faker->randomFloat(2, 0, 100),
         ];
     }
