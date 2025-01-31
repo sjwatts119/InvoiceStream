@@ -7,11 +7,11 @@
                     <flux:subheading>{{ $arrangement->entries_count }} Entries</flux:subheading>
                 </div>
 
-    {{--            <div class="space-y-2">--}}
-    {{--                <flux:button variant="primary" class="w-full">Log in</flux:button>--}}
+                <div class="flex gap-2">
+                    <flux:button class="w-full">New Entry</flux:button>
 
-    {{--                <flux:button variant="ghost" class="w-full">Sign up for a new account</flux:button>--}}
-    {{--            </div>--}}
+                    <flux:button variant="primary" class="w-full" :href="route('arrangements.show', $arrangement)">View</flux:button>
+                </div>
             </flux:card>
         @endforeach
     </div>
