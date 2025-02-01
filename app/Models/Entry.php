@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Money\Currency;
-use function Pest\Laravel\get;
 
 class Entry extends Model
 {
@@ -35,6 +33,11 @@ class Entry extends Model
         return $this->belongsTo(Arrangement::class);
     }
 
+    public function invoice(): BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
     public function earned(): Attribute
     {
         return Attribute::make(
@@ -46,6 +49,13 @@ class Entry extends Model
     {
         return Attribute::make(
             get: fn (): string => Money::parseByDecimal($this->rate, $this->arrangement->currency),
+        );
+    }
+
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): string => $this->invoice ? 'Invoiced' : 'Uninvoiced',
         );
     }
 }

@@ -4,9 +4,15 @@
             Arrangement: {{ $arrangement->name }}
         </flux:heading>
 
-        <flux:modal.trigger name="delete-arrangement">
-            <flux:button variant="danger">Delete</flux:button>
-        </flux:modal.trigger>
+        <div class="flex gap-2">
+            <flux:modal.trigger name="update-arrangement">
+                <flux:button icon="pencil">Edit</flux:button>
+            </flux:modal.trigger>
+
+            <flux:modal.trigger name="delete-arrangement">
+                <flux:button variant="danger" icon="trash">Delete</flux:button>
+            </flux:modal.trigger>
+        </div>
     </div>
 
     @if($arrangement->entries->isNotEmpty())
@@ -33,6 +39,7 @@
                 <flux:column>Hours</flux:column>
                 <flux:column>Rate</flux:column>
                 <flux:column>Earned</flux:column>
+                <flux:column>Status</flux:column>
             </flux:columns>
 
             <flux:rows>
@@ -49,6 +56,13 @@
                         </flux:cell>
                         <flux:cell>
                             {{ $entry->earned }}
+                        </flux:cell>
+                        <flux:cell>
+                            <flux:badge size="sm"
+                                        inset="top bottom"
+                                        :color="$entry->status === 'Invoiced' ? 'green' : 'red'">
+                                {{ $entry->status }}
+                            </flux:badge>
                         </flux:cell>
                     </flux:row>
                 @endforeach
@@ -78,6 +92,22 @@
                 </flux:modal.close>
 
                 <flux:button type="submit" variant="danger">Confirm</flux:button>
+            </div>
+        </flux:modal>
+    </form>
+
+    <form wire:submit="update">
+        <flux:modal name="update-arrangement" class="md:w-96 space-y-6">
+            <div>
+                <flux:heading size="lg">Update Arrangement</flux:heading>
+            </div>
+
+            <x-arrangements.form.fields />
+
+            <div class="flex">
+                <flux:spacer />
+
+                <flux:button type="submit" variant="primary">Update</flux:button>
             </div>
         </flux:modal>
     </form>

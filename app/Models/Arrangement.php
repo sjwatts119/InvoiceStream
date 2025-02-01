@@ -25,6 +25,7 @@ class Arrangement extends Model
     ];
 
     protected $casts = [
+        'rate' => 'decimal:2',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -44,7 +45,7 @@ class Arrangement extends Model
         return Attribute::make(
             get: fn (): Money => Money::sum(
                 ...$this->entries->map(
-                    fn (Entry $entry) => $entry->earned,
+                    fn (Entry $entry): Money => $entry->earned,
                 )
             ),
         );

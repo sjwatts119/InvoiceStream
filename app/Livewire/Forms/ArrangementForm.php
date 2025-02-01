@@ -24,4 +24,13 @@ class ArrangementForm extends Form
             'currency' => ['required', 'string', new Currency()],
         ];
     }
+
+    protected function prepareForValidation($attributes)
+    {
+        if ($this->rate === '') {
+            $this->rate = null;
+        }
+
+        return $attributes;
+    }
 }
