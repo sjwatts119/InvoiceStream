@@ -21,7 +21,7 @@
                 <flux:subheading>Total Earned</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
-                    @money($arrangement->earned, $arrangement->currency)
+                    {{ $arrangement->earned }}
                 </flux:heading>
             </flux:card>
             <flux:card size="sm" class="min-w-60">
@@ -32,20 +32,25 @@
                 </flux:heading>
             </flux:card>
         </div>
+    @endif
 
-        <div class="flex justify-end gap-2">
+    <div class="flex justify-between items-center">
+        <flux:heading size="xl">
+            Work Entries
+        </flux:heading>
+        <div class="flex gap-2">
             <flux:button :disabled="empty($invoiceForm->entries)"
-                         wire:click="detachFromInvoice">
-                Remove From Invoice
-            </flux:button>
-            <flux:button :disabled="empty($invoiceForm->entries)"
+                         icon="document-currency-pound"
                          wire:click="createInvoice">
                 Create Invoice
             </flux:button>
+            <livewire:arrangements.components.create-entry-modal :$arrangement />
         </div>
+    </div>
 
+    @if($arrangement->entries->isNotEmpty())
         <flux:card>
-            <flux:checkbox.group wire:model.live="invoiceForm.entries" class="!select-auto">
+            <flux:checkbox.group wire:model.live="invoiceForm.entries">
                 <flux:table>
                     <flux:columns>
                         <flux:column>
@@ -62,7 +67,9 @@
                         @foreach($arrangement->entries as $entry)
                             <flux:row wire:key="entry-{{ $entry->id }}">
                                 <flux:cell>
-                                    <flux:checkbox :value="$entry->id" />
+                                    @if(!$entry->invoiced)
+                                        <flux:checkbox :value="$entry->id" />
+                                    @endif
                                 </flux:cell>
                                 <flux:cell>
                                     {{ $entry->date->format('D j M, Y') }}
@@ -90,7 +97,58 @@
             </flux:checkbox.group>
             <flux:error name="invoiceForm.entries" />
         </flux:card>
+    @else
+        <flux:heading>
+            No work entries have been created for this arrangement.
+        </flux:heading>
     @endif
+
+    <flux:heading size="xl">
+        Generated Invoices
+    </flux:heading>
+
+    <div class="flex gap-8">
+        @forelse($arrangement->invoices as $invoice)
+            <flux:card class="space-y-8">
+                <div>
+                    <flux:heading size="lg">
+                        Invoice: {{ $invoice->short_ulid }}
+                    </flux:heading>
+
+                    <flux:subheading>
+                        <p>
+                            Total: <span class="font-semibold">{{ $invoice->total }}</span>
+                        </p>
+                        <p>
+                            Hours: <span class="font-semibold">{{ $invoice->hours }}</span>
+                        </p>
+                        <p>
+                            Generated: <span class="font-semibold">{{ $invoice->created_at->format('D j M, Y') }}</span>
+                        </p>
+                    </flux:subheading>
+                </div>
+
+                <div class="w-full">
+                    <flux:button class="w-full">
+                        View
+                    </flux:button>
+                </div>
+            </flux:card>
+        @empty
+            <flux:heading>
+                No invoices have been created for this arrangement.
+            </flux:heading>
+        @endforelse
+    </div>
+
+    <flux:heading size="xl">
+        Arrangement Notes
+    </flux:heading>
+
+    <flux:textarea class="rounded-xl"
+                   wire:model.blur="notes"
+                   placeholder="Any notes go here..."/>
+    <flux:error name="notes" />
 
     <form wire:submit="destroy">
         <flux:modal name="delete-arrangement" class="min-w-[22rem] space-y-6">
@@ -121,7 +179,7 @@
     <form wire:submit="update">
         <flux:modal name="update-arrangement" class="md:w-96 space-y-6">
             <div>
-                <flux:heading size="lg">Update Arrangement</flux:heading>
+                <flux:heading size="lg">Editing Arrangement</flux:heading>
             </div>
 
             <x-arrangements.form.fields />

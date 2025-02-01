@@ -38,10 +38,17 @@ class Entry extends Model
         return $this->belongsTo(Invoice::class);
     }
 
+    public function rawTotal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => $this->hours * $this->rate,
+        );
+    }
+
     public function earned(): Attribute
     {
         return Attribute::make(
-            get: fn (): Money => Money::parseByDecimal($this->hours * $this->rate, $this->arrangement->currency),
+            get: fn (): Money => Money::parseByDecimal($this->rawTotal, $this->arrangement->currency),
         );
     }
 

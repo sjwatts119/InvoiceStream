@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Arrangement extends Model
 {
@@ -22,6 +23,7 @@ class Arrangement extends Model
         'currency',
         'rate',
         'name',
+        'notes',
     ];
 
     protected $casts = [
@@ -40,14 +42,22 @@ class Arrangement extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function invoices(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            related: Invoice::class,
+            through: Entry::class,
+            firstKey: 'arrangement_id',
+            secondKey: 'id',
+            localKey: 'id',
+            secondLocalKey: 'invoice_id',
+        )->distinct();
+    }
+
     public function earned(): Attribute
     {
         return Attribute::make(
-            get: fn (): Money => Money::sum(
-                ...$this->entries->map(
-                    fn (Entry $entry): Money => $entry->earned,
-                )
-            ),
+            get: fn (): Money => Money::parseByDecimal($this->entries->sum('rawTotal'), $this->currency),
         );
     }
 

@@ -6,8 +6,6 @@ use App\Livewire\Forms\ArrangementForm;
 use App\Livewire\Forms\InvoiceForm;
 use App\Models\Arrangement;
 use App\Models\Entry;
-use App\Models\Invoice;
-use App\Rules\Arrangement\EnsureInvoiced;
 use App\Rules\Arrangement\EnsureNotInvoiced;
 use App\Traits\ValidatesEntries;
 use Flux\Flux;
@@ -16,6 +14,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class ShowArrangement extends Component
@@ -29,25 +28,25 @@ class ShowArrangement extends Component
 
     public InvoiceForm $invoiceForm;
 
+    #[Validate(['nullable', 'string', 'max:500'])]
+    public ?string $notes = '';
+
     public function mount(): void
     {
         $this->form->fill($this->arrangement->toArray());
+        $this->notes = $this->arrangement->notes;
     }
 
-    public function detachFromInvoice(): void
+    public function updatedNotes(): void
     {
-        $this->invoiceForm->validate([
-            'entries' => [
-                ...$this->baseEntryRules(),
-                new EnsureInvoiced(),
-            ],
-        ]);
+        $this->validate();
 
-        Entry::whereIn('id', $this->invoiceForm->entries)
-            ->update(['invoice_id' => null]);
+        $this->arrangement->notes = $this->notes;
+
+        $this->arrangement->save();
 
         Flux::toast(
-            text: 'Invoice deleted successfully',
+            text: 'Notes updated successfully',
             variant: 'success',
         );
     }
@@ -88,6 +87,8 @@ class ShowArrangement extends Component
             text: 'Arrangement updated successfully',
             variant: 'success',
         );
+
+        Flux::modal('update-arrangement')->close();
     }
 
     public function destroy(): void
@@ -112,6 +113,7 @@ class ShowArrangement extends Component
     {
         $this->arrangement->load([
             'entries' => fn ($query) => $query->orderByDesc('date'),
+            'invoices',
         ]);
 
         return view('livewire.pages.arrangements.show')

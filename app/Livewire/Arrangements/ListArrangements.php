@@ -16,7 +16,7 @@ class ListArrangements extends Component
     {
         return auth()->user()
             ->arrangements()
-            ->withCount('entries')
+            ->latest()
             ->get();
     }
 
