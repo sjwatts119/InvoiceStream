@@ -57,6 +57,7 @@
                             <flux:checkbox.all />
                         </flux:column>
                         <flux:column>Date</flux:column>
+                        <flux:column>Notes</flux:column>
                         <flux:column>Hours</flux:column>
                         <flux:column>Rate</flux:column>
                         <flux:column>Earned</flux:column>
@@ -73,6 +74,11 @@
                                 </flux:cell>
                                 <flux:cell>
                                     {{ $entry->date->format('D j M, Y') }}
+                                </flux:cell>
+                                <flux:cell>
+                                    <p class="text-wrap">
+                                        {{ $entry->notes ?? 'No notes' }}
+                                    </p>
                                 </flux:cell>
                                 <flux:cell>
                                     {{ $entry->hours }}

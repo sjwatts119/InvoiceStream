@@ -20,6 +20,7 @@ class Entry extends Model
         'hours',
         'rate',
         'date',
+        'notes',
     ];
 
     protected $casts = [

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('hours');
             $table->float('rate')->nullable();
             $table->timestamp('date');
+            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

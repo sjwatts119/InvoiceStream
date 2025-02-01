@@ -14,6 +14,7 @@ use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -83,6 +84,8 @@ class ShowArrangement extends Component
 
         $this->arrangement->update($this->form->toArray());
 
+        $this->dispatch('arrangement-updated');
+
         Flux::toast(
             text: 'Arrangement updated successfully',
             variant: 'success',
@@ -108,7 +111,7 @@ class ShowArrangement extends Component
         );
     }
 
-    #[Layout('layouts.app')]
+    #[Layout('layouts.app'), On('entry-created')]
     public function render(): View
     {
         $this->arrangement->load([

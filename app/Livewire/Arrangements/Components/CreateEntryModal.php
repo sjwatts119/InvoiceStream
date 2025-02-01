@@ -7,6 +7,7 @@ use App\Models\Arrangement;
 use Flux\Flux;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class CreateEntryModal extends Component
@@ -16,12 +17,18 @@ class CreateEntryModal extends Component
 
     public EntryForm $form;
 
-    public function mount(): void
+    #[On('arrangement-updated')]
+    public function fillForm(): void
     {
         $this->form->currency = $this->arrangement->currency;
-        if($this->arrangement->rate) {
-            $this->form->rate = $this->arrangement->rate;
-        }
+        $this->form->fill([
+            'rate' => $this->arrangement->rate,
+        ]);
+    }
+
+    public function mount(): void
+    {
+        $this->fillForm();
     }
 
     public function store(): void
@@ -29,6 +36,8 @@ class CreateEntryModal extends Component
         $this->form->validate();
 
         $this->arrangement->entries()->create($this->form->toArray());
+
+        $this->dispatch('entry-created');
 
         $this->form->reset();
 
