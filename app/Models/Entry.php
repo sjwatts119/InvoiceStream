@@ -38,7 +38,14 @@ class Entry extends Model
     public function earned(): Attribute
     {
         return Attribute::make(
-            get: fn () => Money::parseByDecimal($this->hours * $this->rate, $this->arrangement->currency),
+            get: fn (): Money => Money::parseByDecimal($this->hours * $this->rate, $this->arrangement->currency),
+        );
+    }
+
+    public function formattedRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): string => Money::parseByDecimal($this->rate, $this->arrangement->currency),
         );
     }
 }
