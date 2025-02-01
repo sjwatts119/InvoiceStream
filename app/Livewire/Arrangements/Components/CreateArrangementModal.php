@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Arrangements;
+namespace App\Livewire\Arrangements\Components;
 
 use App\Livewire\Forms\ArrangementForm;
 use App\Models\Arrangement;
@@ -34,6 +34,6 @@ class CreateArrangementModal extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
-        return view('livewire.pages.arrangements.create');
+        return view('livewire.pages.arrangements.components.create');
     }
 }

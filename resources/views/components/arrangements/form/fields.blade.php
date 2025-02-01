@@ -33,7 +33,6 @@
         <flux:label>Rate</flux:label>
 
         <flux:input.group>
-
             @if($this->form->currency)
                 <flux:input.group.prefix>
                     @currency($this->form->currency)
@@ -45,7 +44,4 @@
 
         <flux:error name="form.rate" />
     </flux:field>
-
-
-
 </div>
