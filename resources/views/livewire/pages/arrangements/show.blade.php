@@ -33,41 +33,63 @@
             </flux:card>
         </div>
 
-        <flux:table>
-            <flux:columns>
-                <flux:column>Date</flux:column>
-                <flux:column>Hours</flux:column>
-                <flux:column>Rate</flux:column>
-                <flux:column>Earned</flux:column>
-                <flux:column>Status</flux:column>
-            </flux:columns>
+        <div class="flex justify-end gap-2">
+            <flux:button :disabled="empty($invoiceForm->entries)"
+                         wire:click="detachFromInvoice">
+                Remove From Invoice
+            </flux:button>
+            <flux:button :disabled="empty($invoiceForm->entries)"
+                         wire:click="createInvoice">
+                Create Invoice
+            </flux:button>
+        </div>
 
-            <flux:rows>
-                @foreach($arrangement->entries as $entry)
-                    <flux:row>
-                        <flux:cell>
-                            {{ $entry->date->format('D j M, Y') }}
-                        </flux:cell>
-                        <flux:cell>
-                            {{ $entry->hours }}
-                        </flux:cell>
-                        <flux:cell>
-                            {{ $entry->formatted_rate }} per hour
-                        </flux:cell>
-                        <flux:cell>
-                            {{ $entry->earned }}
-                        </flux:cell>
-                        <flux:cell>
-                            <flux:badge size="sm"
-                                        inset="top bottom"
-                                        :color="$entry->status === 'Invoiced' ? 'green' : 'red'">
-                                {{ $entry->status }}
-                            </flux:badge>
-                        </flux:cell>
-                    </flux:row>
-                @endforeach
-            </flux:rows>
-        </flux:table>
+        <flux:card>
+            <flux:checkbox.group wire:model.live="invoiceForm.entries" class="!select-auto">
+                <flux:table>
+                    <flux:columns>
+                        <flux:column>
+                            <flux:checkbox.all />
+                        </flux:column>
+                        <flux:column>Date</flux:column>
+                        <flux:column>Hours</flux:column>
+                        <flux:column>Rate</flux:column>
+                        <flux:column>Earned</flux:column>
+                        <flux:column>Status</flux:column>
+                    </flux:columns>
+
+                    <flux:rows>
+                        @foreach($arrangement->entries as $entry)
+                            <flux:row wire:key="entry-{{ $entry->id }}">
+                                <flux:cell>
+                                    <flux:checkbox :value="$entry->id" />
+                                </flux:cell>
+                                <flux:cell>
+                                    {{ $entry->date->format('D j M, Y') }}
+                                </flux:cell>
+                                <flux:cell>
+                                    {{ $entry->hours }}
+                                </flux:cell>
+                                <flux:cell>
+                                    {{ $entry->formatted_rate }} per hour
+                                </flux:cell>
+                                <flux:cell>
+                                    {{ $entry->earned }}
+                                </flux:cell>
+                                <flux:cell>
+                                    <flux:badge size="sm"
+                                                inset="top bottom"
+                                                :color="$entry->status === 'Invoiced' ? 'green' : 'red'">
+                                        {{ $entry->status }}
+                                    </flux:badge>
+                                </flux:cell>
+                            </flux:row>
+                        @endforeach
+                    </flux:rows>
+                </flux:table>
+            </flux:checkbox.group>
+            <flux:error name="invoiceForm.entries" />
+        </flux:card>
     @endif
 
     <form wire:submit="destroy">

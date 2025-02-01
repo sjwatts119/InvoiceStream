@@ -58,4 +58,11 @@ class Entry extends Model
             get: fn (): string => $this->invoice ? 'Invoiced' : 'Uninvoiced',
         );
     }
+
+    public function invoiced(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): bool => $this->invoice !== null,
+        );
+    }
 }

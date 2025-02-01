@@ -3,8 +3,15 @@
 namespace App\Livewire\Arrangements;
 
 use App\Livewire\Forms\ArrangementForm;
+use App\Livewire\Forms\InvoiceForm;
 use App\Models\Arrangement;
+use App\Models\Entry;
+use App\Models\Invoice;
+use App\Rules\Arrangement\EnsureInvoiced;
+use App\Rules\Arrangement\EnsureNotInvoiced;
+use App\Traits\ValidatesEntries;
 use Flux\Flux;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
@@ -13,14 +20,60 @@ use Livewire\Component;
 
 class ShowArrangement extends Component
 {
+    use ValidatesEntries;
+
     #[Locked, Computed]
     public Arrangement $arrangement;
 
     public ArrangementForm $form;
 
+    public InvoiceForm $invoiceForm;
+
     public function mount(): void
     {
         $this->form->fill($this->arrangement->toArray());
+    }
+
+    public function detachFromInvoice(): void
+    {
+        $this->invoiceForm->validate([
+            'entries' => [
+                ...$this->baseEntryRules(),
+                new EnsureInvoiced(),
+            ],
+        ]);
+
+        Entry::whereIn('id', $this->invoiceForm->entries)
+            ->update(['invoice_id' => null]);
+
+        Flux::toast(
+            text: 'Invoice deleted successfully',
+            variant: 'success',
+        );
+    }
+
+    public function createInvoice(): void
+    {
+        $this->invoiceForm->validate([
+            'entries' => [
+                ...$this->baseEntryRules(),
+                new EnsureNotInvoiced(),
+            ],
+        ]);
+
+        DB::transaction(function () {
+            $invoice = auth()->user()->invoices()->create();
+
+            Entry::whereIn('id', $this->invoiceForm->entries)
+                ->update(['invoice_id' => $invoice->id]);
+        });
+
+        $this->invoiceForm->reset();
+
+        Flux::toast(
+            text: 'Invoice created successfully',
+            variant: 'success',
+        );
     }
 
     public function update(): void
@@ -57,6 +110,10 @@ class ShowArrangement extends Component
     #[Layout('layouts.app')]
     public function render(): View
     {
+        $this->arrangement->load([
+            'entries' => fn ($query) => $query->orderByDesc('date'),
+        ]);
+
         return view('livewire.pages.arrangements.show')
             ->with('arrangement', $this->arrangement);
     }
