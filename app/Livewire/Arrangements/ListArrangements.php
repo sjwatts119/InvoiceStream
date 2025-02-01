@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Arrangements;
 
+use App\Models\Arrangement;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;

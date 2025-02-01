@@ -29,7 +29,6 @@ class CreateArrangementModal extends Component
         $this->dispatch('agreement-created');
 
         return $arrangement;
-
     }
 
     #[Layout('layouts.app')]

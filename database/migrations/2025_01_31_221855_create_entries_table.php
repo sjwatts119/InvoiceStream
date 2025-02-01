@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('arrangement_id')->constrained();
+            $table->foreignUlid('arrangement_id')->constrained()->cascadeOnDelete();
             $table->float('hours');
             $table->float('rate')->nullable();
             $table->timestamp('date');
