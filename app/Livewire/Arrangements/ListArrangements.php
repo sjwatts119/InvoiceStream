@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ListArrangements extends Component
@@ -19,7 +20,7 @@ class ListArrangements extends Component
             ->get();
     }
 
-    #[Layout('layouts.app')]
+    #[Layout('layouts.app'), On('agreement-created')]
     public function render(): View
     {
         return view('livewire.pages.arrangements.index')

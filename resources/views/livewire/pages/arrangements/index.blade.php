@@ -1,4 +1,7 @@
-<div>
+<div class="space-y-4">
+    <div class="flex justify-end">
+        <livewire:arrangements.create-arrangement-modal />
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($arrangements as $arrangement)
             <flux:card class="space-y-6">
