@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Observers\ArrangementObserver;
 use Cknow\Money\Money;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
+#[ObservedBy(ArrangementObserver::class)]
 class Arrangement extends Model
 {
     use HasUlids;

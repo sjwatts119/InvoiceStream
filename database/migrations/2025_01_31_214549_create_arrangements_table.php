@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('arrangements', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignUlid('user_id')->constrained('users', 'id');
+            $table->foreignUlid('user_id')
+                ->constrained('users', 'id')
+                ->cascadeOnDelete();
             $table->string('description')->nullable();
             $table->string('notes')->nullable();
             $table->string('currency');

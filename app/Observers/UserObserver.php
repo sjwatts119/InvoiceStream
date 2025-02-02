@@ -14,6 +14,10 @@ class UserObserver
 
     public function deleting(User $user): void
     {
+        $user->arrangements->each(function ($arrangement) {
+            $arrangement->delete();
+        });
+
         $user->address->delete();
     }
 }

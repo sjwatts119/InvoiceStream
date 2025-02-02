@@ -17,7 +17,6 @@
         "livewire/flux-pro": "^1.1",
         "livewire/livewire": "^3.4",
         "livewire/volt": "^1.0",
-        "spatie/laravel-medialibrary": "^11.12",
         "spatie/laravel-pdf": "^1.5"
     },
     "require-dev": {

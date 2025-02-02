@@ -18,8 +18,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreignUlid('invoice_id')
                 ->nullable()
-                ->constrained('invoices')
-                ->cascadeOnDelete();
+                ->constrained('invoices');
             $table->float('hours');
             $table->float('rate')->nullable();
             $table->timestamp('date');
