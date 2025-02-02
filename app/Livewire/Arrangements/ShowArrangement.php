@@ -105,6 +105,8 @@ class ShowArrangement extends Component
 
         $this->invoiceForm->reset();
 
+        Flux::modal('create-invoice')->close();
+
         Flux::toast(
             text: 'Invoice created successfully',
             variant: 'success',

@@ -33,7 +33,7 @@
     </div>
 
     <form wire:submit="destroy">
-        <flux:modal name="delete-invoice" class="min-w-[22rem] space-y-6">
+        <flux:modal name="delete-invoice" class="min-w-[21rem] space-y-6">
             <div>
                 <flux:heading size="lg">Delete invoice?</flux:heading>
                 <flux:subheading>

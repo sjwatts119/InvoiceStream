@@ -38,7 +38,7 @@ new class extends Component {
         </flux:button>
     </flux:modal.trigger>
 
-    <flux:modal name="confirm-user-deletion" class="min-w-[22rem]">
+    <flux:modal name="confirm-user-deletion" class="min-w-[21rem]">
         <form wire:submit="deleteUser" class="space-y-6">
             <flux:heading level="2" size="xl">
                 {{ __('Are you sure you want to delete your account?') }}

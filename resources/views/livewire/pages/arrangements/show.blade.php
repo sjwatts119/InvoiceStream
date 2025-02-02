@@ -46,11 +46,13 @@
             Work Entries
         </flux:heading>
         <div class="flex gap-2">
-            <flux:button :disabled="empty($invoiceForm->entries)"
-                         icon="document-currency-pound"
-                         wire:click="createInvoice">
-                Create Invoice
-            </flux:button>
+            <flux:modal.trigger name="create-invoice">
+                <flux:button :disabled="empty($invoiceForm->entries)"
+                             icon="document-currency-pound">
+                    Create Invoice
+                </flux:button>
+            </flux:modal.trigger>
+
             <livewire:arrangements.components.create-entry-modal :$arrangement />
         </div>
     </div>
@@ -81,7 +83,7 @@
                                     @endif
                                 </flux:cell>
                                 <flux:cell>
-                                    {{ $entry->date->format('D j M, Y') }}
+                                    {{ $entry->date->format('H:i, D j M, Y') }}
                                 </flux:cell>
                                 <flux:cell class="max-sm:hidden">
                                     <p class="text-wrap">
@@ -164,7 +166,7 @@
                         </p>
                         <p>
                             Generated: <span class="font-semibold">
-                                {{ $invoice->created_at->format('D j M, Y') }}
+                                {{ $invoice->created_at->format('H:i, D j M, Y') }}
                             </span>
                         </p>
                     </flux:subheading>
@@ -193,7 +195,7 @@
     <flux:error name="notes" />
 
     <form wire:submit="destroy">
-        <flux:modal name="delete-arrangement" class="min-w-[22rem] space-y-6">
+        <flux:modal name="delete-arrangement" class="min-w-[21rem] space-y-6">
             <div>
                 <flux:heading size="lg">Delete arrangement?</flux:heading>
                 <flux:subheading>
@@ -214,6 +216,32 @@
                 </flux:modal.close>
 
                 <flux:button type="submit" variant="danger">Confirm</flux:button>
+            </div>
+        </flux:modal>
+    </form>
+
+    <form wire:submit="createInvoice">
+        <flux:modal name="create-invoice" class="min-w-[21rem] space-y-6">
+            <div>
+                <flux:heading size="lg">Create invoice?</flux:heading>
+                <flux:subheading>
+                    <p>
+                        Are you sure you would like to create an invoice for these items?
+                    </p>
+                    <p>
+                        You can delete this invoice later if you need to.
+                    </p>
+                </flux:subheading>
+            </div>
+
+            <div class="flex gap-2">
+                <flux:spacer />
+
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+
+                <flux:button type="submit" variant="primary">Confirm</flux:button>
             </div>
         </flux:modal>
     </form>

@@ -28,7 +28,7 @@
                                 Hours: <span class="font-semibold">{{ $arrangement->hours }}</span>
                             </p>
                             <p class="text-sm">
-                                Generated: <span class="font-semibold">{{ $arrangement->created_at->format('D j M, Y') }}</span>
+                                Created: <span class="font-semibold">{{ $arrangement->created_at->format('H:i, D j M, Y') }}</span>
                             </p>
                         </div>
                     </div>
