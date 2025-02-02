@@ -5,6 +5,7 @@ namespace App\Livewire\Arrangements\Components;
 use App\Livewire\Forms\EntryForm;
 use App\Models\Arrangement;
 use Flux\Flux;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -35,12 +36,15 @@ class CreateEntryModal extends Component
     {
         $this->form->validate();
 
-        $this->arrangement->entries()->create($this->form->toArray());
-        $this->arrangement->touch();
+        DB::transaction(function () {
+            $this->arrangement->entries()->create($this->form->toArray());
+            $this->arrangement->touch();
+        });
 
         $this->dispatch('entry-created');
 
         $this->form->reset();
+        $this->fillForm();
 
         Flux::toast(
             text: 'Entry created successfully.',

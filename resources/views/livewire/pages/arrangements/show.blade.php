@@ -83,7 +83,7 @@
                                     @endif
                                 </flux:cell>
                                 <flux:cell>
-                                    {{ $entry->date->format('H:i, D j M, Y') }}
+                                    {{ $entry->date->format('D j M, Y') }}
                                 </flux:cell>
                                 <flux:cell class="max-sm:hidden">
                                     <p class="text-wrap">

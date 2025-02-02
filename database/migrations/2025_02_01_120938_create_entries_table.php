@@ -21,7 +21,7 @@ return new class extends Migration
                 ->constrained('invoices');
             $table->float('hours');
             $table->float('rate')->nullable();
-            $table->timestamp('date');
+            $table->date('date');
             $table->text('notes')->nullable();
             $table->timestamps();
         });

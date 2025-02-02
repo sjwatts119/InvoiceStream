@@ -133,6 +133,10 @@ class ShowArrangement extends Component
             return;
         }
 
+        if(in_array($entry->id, $this->invoiceForm->entries)) {
+            $this->invoiceForm->entries = array_diff($this->invoiceForm->entries, [$entry->id]);
+        }
+
         $entry->delete();
 
         Flux::toast(
