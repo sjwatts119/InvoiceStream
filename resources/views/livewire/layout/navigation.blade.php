@@ -18,13 +18,6 @@ new class extends Component {
 <flux:header container class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
     <flux:sidebar.toggle class="lg:hidden" icon="bars-3" inset="left"/>
 
-    <flux:brand href="#" class="max-lg:hidden dark:hidden">
-        <x-application-logo class="block h-8 w-auto fill-current text-zinc-800 dark:text-zinc-200"/>
-    </flux:brand>
-    <flux:brand href="#" class="max-lg:!hidden hidden dark:flex">
-        <x-application-logo class="block h-8 w-auto fill-current text-zinc-800 dark:text-zinc-200"/>
-    </flux:brand>
-
     <flux:navbar class="max-lg:hidden ml-6">
         <flux:navbar.item icon="home"
                           :current="request()->routeIs('arrangements.*')"
@@ -56,15 +49,9 @@ new class extends Component {
                   class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>
 
-        <flux:brand href="#" class="px-2 dark:hidden">
-            <x-application-logo class="block h-8 w-auto fill-current text-zinc-800 dark:text-zinc-200"/>
-        </flux:brand>
-        <flux:brand href="#" class="px-2 hidden dark:flex">
-            <x-application-logo class="block h-8 w-auto fill-current text-zinc-800 dark:text-zinc-200"/>
-        </flux:brand>
-
         <flux:navlist variant="outline">
             <flux:navlist.item icon="home"
+                               :current="request()->routeIs('arrangements.*')"
                                href="{{ route('arrangements.index') }}">
                 {{__('Arrangements')}}
             </flux:navlist.item>

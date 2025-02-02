@@ -1,32 +1,33 @@
 <div x-data="{ showPreview: false }">
-    <div class="flex max-md:flex-col gap-4 justify-between">
-        <flux:heading size="xl" class="mb-4">Invoice: #{{ $invoice->short_ulid }}</flux:heading>
+    <div class="flex flex-col gap-4 w-full">
+        <div class="flex max-md:flex-col gap-4 justify-between">
+            <flux:heading size="xl">Invoice: #{{ $invoice->short_ulid }}</flux:heading>
 
-        <div class="flex gap-2">
-            <flux:button icon="chevron-left" variant="ghost" :href="route('arrangements.show', $invoice->arrangement)">
-                Back
-            </flux:button>
-            <flux:button wire:click="download">
-                Download
-            </flux:button>
+            <div class="flex gap-2">
+                <flux:button icon="chevron-left" variant="ghost" :href="route('arrangements.show', $invoice->arrangement)">
+                    Back
+                </flux:button>
+                <flux:button wire:click="download">
+                    Download
+                </flux:button>
 
-            <flux:modal.trigger name="delete-invoice">
-                <flux:button variant="danger" icon="trash">Delete</flux:button>
-            </flux:modal.trigger>
+                <flux:modal.trigger name="delete-invoice">
+                    <flux:button variant="danger" icon="trash">Delete</flux:button>
+                </flux:modal.trigger>
+            </div>
+        </div>
+        <div class="flex">
+            <flux:button x-on:click="showPreview = !showPreview">
+                <span x-show="showPreview">Hide Preview</span>
+                <span x-show="!showPreview">Show Preview</span>
+            </flux:button>
         </div>
     </div>
 
-    <flux:button x-on:click="showPreview = !showPreview">
-        <span x-show="showPreview">Hide Preview</span>
-        <span x-show="!showPreview">Show Preview</span>
-    </flux:button>
-
-    <div class="scale-75 origin-top mt-8" x-show="showPreview">
-        <div class="w-[56rem] bg-white shadow-lg mx-auto">
+    <div class="mt-8" x-show="showPreview">
+        <div class="min-w-[32rem] max-w-[48rem] h-full bg-white shadow-lg mx-auto">
             <div class="overflow-hidden">
-                <template shadowrootmode="closed">
-                    <x-pdf.invoice :$invoice :address="auth()->user()->address"/>
-                </template>
+                <iframe class="w-full h-screen" src="{{ route('invoices.preview', $invoice) }}" frameborder="0"></iframe>
             </div>
         </div>
     </div>

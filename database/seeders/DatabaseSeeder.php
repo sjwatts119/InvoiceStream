@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'Other User',
+            'email' => 'other@example.com',
+        ]);
+
         $user->address()->update(
             Address::factory([
                 'addressable_id' => $user->id,
