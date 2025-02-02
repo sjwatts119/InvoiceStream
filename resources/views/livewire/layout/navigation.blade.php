@@ -35,6 +35,8 @@ new class extends Component {
 
     <flux:spacer/>
 
+    <flux:button x-data x-on:click="$flux.dark = ! $flux.dark" icon="moon" variant="subtle" aria-label="Toggle dark mode" />
+
     <flux:dropdown class="max-lg:hidden">
         <flux:navbar.item icon-trailing="chevron-down">
             <span x-data="{{ json_encode(['name' => auth()->user()->name]) }}"
