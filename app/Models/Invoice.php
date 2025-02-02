@@ -9,12 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Invoice extends Model implements HasMedia
+class Invoice extends Model
 {
-    use InteractsWithMedia;
     use HasUlids;
 
     public function user(): BelongsTo

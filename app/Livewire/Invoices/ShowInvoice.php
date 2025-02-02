@@ -4,6 +4,8 @@ namespace App\Livewire\Invoices;
 
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Flux\Flux;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
@@ -14,6 +16,27 @@ class ShowInvoice extends Component
 {
     #[Locked]
     public Invoice $invoice;
+
+    public function destroy(): void
+    {
+        $arrangement = $this->invoice->arrangement;
+
+        DB::transaction(function () {
+            $this->invoice->entries()->update(['invoice_id' => null]);
+
+            $this->invoice->delete();
+        });
+
+        Flux::toast(
+            text: 'Invoice deleted successfully',
+            variant: 'success',
+        );
+
+        $this->redirect(
+            url: route('arrangements.show', $arrangement->id),
+            navigate: true
+        );
+    }
 
     public function download(): StreamedResponse
     {

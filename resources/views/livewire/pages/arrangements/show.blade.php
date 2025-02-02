@@ -18,6 +18,13 @@
     @if($entries->isNotEmpty())
         <div class="flex gap-4">
             <flux:card size="sm" class="min-w-60">
+                <flux:subheading>Not Yet Invoiced</flux:subheading>
+
+                <flux:heading size="xl" class="mb-1">
+                    {{ $arrangement->not_invoiced_earnings }}
+                </flux:heading>
+            </flux:card>
+            <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Total Earned</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
@@ -101,7 +108,16 @@
                     </flux:rows>
                 </flux:table>
             </flux:checkbox.group>
+
             <flux:error name="invoiceForm.entries" />
+
+            <div class="flex justify-center mt-4">
+                <flux:select wire:model.live="rowCount" class="max-w-40">
+                    <flux:option value="10">10 Per Page</flux:option>
+                    <flux:option value="25">25 Per Page</flux:option>
+                    <flux:option value="50">50 Per Page</flux:option>
+                </flux:select>
+            </div>
         </flux:card>
     @else
         <flux:heading>

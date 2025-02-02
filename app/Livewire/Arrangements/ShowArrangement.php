@@ -32,6 +32,8 @@ class ShowArrangement extends Component
 
     public InvoiceForm $invoiceForm;
 
+    public int $rowCount = 10;
+
     public string $sortBy = 'date';
 
     public string $sortDirection = 'desc';
@@ -137,7 +139,7 @@ class ShowArrangement extends Component
                     ? $query->orderBy($this->sortBy, $this->sortDirection)
                     : $query;
             })
-            ->paginate(9);
+            ->paginate($this->rowCount);
     }
 
     #[Layout('layouts.app'), On('entry-created')]

@@ -69,14 +69,33 @@ class Arrangement extends Model
             );
     }
 
+    public function notInvoicedEarnings(): Attribute
+    {
+        return Attribute::make(
+            get: function (): Money {
+                $entries = $this->entries()->uninvoiced()->get();
+
+                $earned = $entries->count() > 0
+                    ? Money::sum(...$entries->map(fn (Entry $entry): Money => $entry->earned))
+                    : null;
+
+                return $earned ?? new Money(0, $this->currency);
+            }
+        );
+    }
+
     public function earned(): Attribute
     {
-        $earned = $this->entries->isNotEmpty()
-            ? Money::sum(...$this->entries->map(fn (Entry $entry): Money => $entry->earned))
-            : null;
+
 
         return Attribute::make(
-            get: fn (): Money => $earned ?? new Money(0, $this->currency),
+            get: function (): Money {
+                $earned = $this->entries->isNotEmpty()
+                    ? Money::sum(...$this->entries->map(fn (Entry $entry): Money => $entry->earned))
+                    : null;
+
+                return $earned ?? new Money(0, $this->currency);
+            }
         );
     }
 
