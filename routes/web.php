@@ -2,6 +2,7 @@
 
 use App\Livewire\Arrangements\ListArrangements;
 use App\Livewire\Arrangements\ShowArrangement;
+use App\Livewire\Invoices\ShowInvoice;
 use Illuminate\Support\Facades\Route;
 
 Route::name('arrangements.')
@@ -13,6 +14,13 @@ Route::name('arrangements.')
             ->middleware(['auth', 'verified'])
             ->name('show');
 });
+
+Route::name('invoices.')
+    ->group(function () {
+        Route::get('invoices/{invoice}', ShowInvoice::class)
+            ->middleware(['auth', 'verified'])
+            ->name('show');
+    });
 
 Route::view('profile', 'profile')
     ->middleware(['auth'])

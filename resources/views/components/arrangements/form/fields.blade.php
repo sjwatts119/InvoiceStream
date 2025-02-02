@@ -6,8 +6,6 @@
 
         <flux:error name="form.name" />
     </flux:field>
-    <flux:textarea wire:model.live.blur="form.description"
-                   label="Description" />
 
     <flux:field>
         <flux:label badge="Required">Currency</flux:label>
@@ -44,4 +42,7 @@
 
         <flux:error name="form.rate" />
     </flux:field>
+
+    <flux:textarea wire:model.live.blur="form.description"
+                   label="Description" />
 </div>

@@ -29,7 +29,14 @@ class Invoice extends Model implements HasMedia
 
     public function arrangement(): HasOneThrough
     {
-        return $this->hasOneThrough(Arrangement::class, Entry::class);
+        return $this->hasOneThrough(
+            related: Arrangement::class,
+            through: Entry::class,
+            firstKey: 'invoice_id',
+            secondKey: 'id',
+            localKey: 'id',
+            secondLocalKey: 'arrangement_id'
+        );
     }
 
     public function shortUlid(): Attribute

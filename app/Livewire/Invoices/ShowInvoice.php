@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Livewire\Invoices;
+
+use App\Models\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\View\View;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
+use Livewire\Component;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+
+class ShowInvoice extends Component
+{
+    #[Locked]
+    public Invoice $invoice;
+
+    public function download(): StreamedResponse
+    {
+        $this->invoice->load([
+            'entries',
+            'arrangement',
+        ]);
+
+        $pdf = Pdf::loadView('components.pdf.invoice', [
+            'invoice' => $this->invoice,
+        ]);
+
+        return response()->streamDownload(
+            callback: function () use ($pdf) {
+                echo $pdf->stream();
+            },
+            name: "Invoice {$this->invoice->short_ulid}.pdf");
+    }
+
+    #[Layout('layouts.app')]
+    public function render(): View
+    {
+        return view('livewire.invoices.show-invoice');
+    }
+}

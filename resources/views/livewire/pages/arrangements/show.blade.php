@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="w-full">
-                    <flux:button class="w-full">
+                    <flux:button :href="route('invoices.show', $invoice->id)" class="w-full">
                         View
                     </flux:button>
                 </div>

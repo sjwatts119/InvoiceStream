@@ -8,6 +8,7 @@ use App\Models\Arrangement;
 use App\Models\Entry;
 use App\Rules\Arrangement\EnsureNotInvoiced;
 use App\Traits\ValidatesEntries;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
