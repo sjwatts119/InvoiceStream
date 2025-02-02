@@ -4,12 +4,14 @@
     </flux:modal.trigger>
 
     <form wire:submit="store">
-        <flux:modal name="create-agreement" class="md:w-96 space-y-6">
+        <flux:modal name="create-agreement" class="max-sm:min-w-[21rem] min-w-[40rem] space-y-6">
             <div>
                 <flux:heading size="lg">New Arrangement</flux:heading>
             </div>
 
             <x-arrangements.form.fields />
+
+            <x-profile.address.form.fields />
 
             <div class="flex">
                 <flux:spacer />

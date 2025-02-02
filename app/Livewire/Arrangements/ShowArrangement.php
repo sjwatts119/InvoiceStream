@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Arrangements;
 
+use App\Livewire\Forms\AddressForm;
 use App\Livewire\Forms\ArrangementForm;
 use App\Livewire\Forms\InvoiceForm;
 use App\Models\Arrangement;
@@ -30,6 +31,8 @@ class ShowArrangement extends Component
 
     public ArrangementForm $form;
 
+    public AddressForm $addressForm;
+
     public InvoiceForm $invoiceForm;
 
     public int $rowCount = 10;
@@ -44,6 +47,9 @@ class ShowArrangement extends Component
     public function mount(): void
     {
         $this->form->fill($this->arrangement->toArray());
+        if($this->arrangement->address) {
+            $this->addressForm->fill($this->arrangement->address->toArray());
+        }
         $this->notes = $this->arrangement->notes;
     }
 
@@ -72,6 +78,15 @@ class ShowArrangement extends Component
 
     public function createInvoice(): void
     {
+        if(!$this->arrangement->address()->exists()) {
+            Flux::toast(
+                text: 'Please add an address to the arrangement before creating an invoice.',
+                variant: 'danger',
+            );
+
+            return;
+        }
+
         $this->invoiceForm->validate([
             'entries' => [
                 ...$this->baseEntryRules(),
@@ -102,7 +117,14 @@ class ShowArrangement extends Component
 
         $this->form->validate();
 
-        $this->arrangement->update($this->form->toArray());
+        DB::transaction(function () {
+            $this->arrangement->update($this->form->toArray());
+
+            $this->arrangement->address()->updateOrCreate(
+                attributes: [],
+                values: $this->addressForm->toArray()
+            );
+        });
 
         $this->dispatch('arrangement-updated');
 
@@ -145,7 +167,9 @@ class ShowArrangement extends Component
     #[Layout('layouts.app'), On('entry-created')]
     public function render(): View
     {
-        $this->arrangement->load('invoices');
+        $this->arrangement->load([
+            'invoices' => fn($query) => $query->latest(),
+        ]);
 
         return view('livewire.pages.arrangements.show')
             ->with([

@@ -22,7 +22,7 @@
                         </p>
                         <div>
                             <p class="text-sm">
-                                Total: <span class="font-semibold">{{ $arrangement->earned }}</span>
+                                Total: <span class="font-semibold">{{ $arrangement->earnings }}</span>
                             </p>
                             <p class="text-sm">
                                 Hours: <span class="font-semibold">{{ $arrangement->hours }}</span>

@@ -1,13 +1,5 @@
 <div class="space-y-4">
     <flux:field>
-        <flux:label badge="Required">Name</flux:label>
-
-        <flux:input required wire:model.live.blur="form.name" />
-
-        <flux:error name="form.name" />
-    </flux:field>
-
-    <flux:field>
         <flux:label badge="Required">Currency</flux:label>
 
         <flux:select

@@ -45,7 +45,7 @@ class Entry extends Model
         return $query->has('invoice');
     }
 
-    public function scopeUninvoiced(Builder $query): Builder
+    public function scopeNotInvoiced(Builder $query): Builder
     {
         return $query->doesntHave('invoice');
     }
@@ -57,10 +57,10 @@ class Entry extends Model
         );
     }
 
-    public function earned(): Attribute
+    public function earnings(): Attribute
     {
         return Attribute::make(
-            get: fn (): Money => Money::parseByDecimal($this->rawTotal, $this->arrangement->currency),
+            get: fn (): Money => Money::parseByDecimal($this->raw_total, $this->arrangement->currency),
         );
     }
 

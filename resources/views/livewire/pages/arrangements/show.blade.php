@@ -1,5 +1,5 @@
 <div class="space-y-8">
-    <div class="flex justify-between">
+    <div class="flex max-md:flex-col gap-4 justify-between md:items-center">
         <flux:heading size="xl">
             Arrangement: {{ $arrangement->name }}
         </flux:heading>
@@ -16,7 +16,7 @@
     </div>
 
     @if($entries->isNotEmpty())
-        <div class="flex gap-4">
+        <div class="flex flex-wrap gap-4">
             <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Not Yet Invoiced</flux:subheading>
 
@@ -25,10 +25,10 @@
                 </flux:heading>
             </flux:card>
             <flux:card size="sm" class="min-w-60">
-                <flux:subheading>Total Earned</flux:subheading>
+                <flux:subheading>Total Earnings</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
-                    {{ $arrangement->earned }}
+                    {{ $arrangement->earnings }}
                 </flux:heading>
             </flux:card>
             <flux:card size="sm" class="min-w-60">
@@ -41,12 +41,12 @@
         </div>
     @endif
 
-    <div class="flex justify-between items-center">
+    <div class="flex max-md:flex-col gap-4 justify-between md:items-center">
         <flux:heading size="xl">
             Work Entries
         </flux:heading>
         <div class="flex gap-2">
-            <flux:button :disabled="empty($entries)"
+            <flux:button :disabled="empty($invoiceForm->entries)"
                          icon="document-currency-pound"
                          wire:click="createInvoice">
                 Create Invoice
@@ -64,11 +64,12 @@
                             <flux:checkbox.all />
                         </flux:column>
                         <flux:column sortable :sorted="$sortBy === 'date'" :direction="$sortDirection" wire:click="sort('date')">Date</flux:column>
-                        <flux:column>Notes</flux:column>
+                        <flux:column class="max-sm:hidden">Notes</flux:column>
                         <flux:column>Hours</flux:column>
                         <flux:column>Rate</flux:column>
-                        <flux:column>Earned</flux:column>
+                        <flux:column>Total</flux:column>
                         <flux:column>Status</flux:column>
+                        <flux:column />
                     </flux:columns>
 
                     <flux:rows>
@@ -82,7 +83,7 @@
                                 <flux:cell>
                                     {{ $entry->date->format('D j M, Y') }}
                                 </flux:cell>
-                                <flux:cell>
+                                <flux:cell class="max-sm:hidden">
                                     <p class="text-wrap">
                                         {{ $entry->notes ?? 'No notes' }}
                                     </p>
@@ -93,8 +94,8 @@
                                 <flux:cell>
                                     {{ $entry->formatted_rate }} per hour
                                 </flux:cell>
-                                <flux:cell>
-                                    {{ $entry->earned }}
+                                <flux:cell variant="strong">
+                                    {{ $entry->earnings }}
                                 </flux:cell>
                                 <flux:cell>
                                     <flux:badge size="sm"
@@ -102,6 +103,19 @@
                                                 :color="$entry->status === 'Invoiced' ? 'green' : 'red'">
                                         {{ $entry->status }}
                                     </flux:badge>
+                                </flux:cell>
+                                <flux:cell>
+                                    @if($entry->invoiced)
+                                        <flux:dropdown>
+                                            <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom" />
+
+                                            <flux:menu>
+                                                <flux:menu.item icon="eye" :href="route('invoices.show', $entry->invoice->id)">
+                                                    View Invoice
+                                                </flux:menu.item>
+                                            </flux:menu>
+                                        </flux:dropdown>
+                                    @endif
                                 </flux:cell>
                             </flux:row>
                         @endforeach
@@ -129,7 +143,7 @@
         Generated Invoices
     </flux:heading>
 
-    <div class="flex gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         @forelse($arrangement->invoices as $invoice)
             <flux:card class="space-y-8">
                 <div>
@@ -139,13 +153,19 @@
 
                     <flux:subheading>
                         <p>
-                            Total: <span class="font-semibold">{{ $invoice->total }}</span>
+                            Total: <span class="font-semibold">
+                                {{ $invoice->total }}
+                            </span>
                         </p>
                         <p>
-                            Hours: <span class="font-semibold">{{ $invoice->hours }}</span>
+                            Hours: <span class="font-semibold">
+                                {{ $invoice->hours }}
+                            </span>
                         </p>
                         <p>
-                            Generated: <span class="font-semibold">{{ $invoice->created_at->format('D j M, Y') }}</span>
+                            Generated: <span class="font-semibold">
+                                {{ $invoice->created_at->format('D j M, Y') }}
+                            </span>
                         </p>
                     </flux:subheading>
                 </div>
@@ -199,12 +219,14 @@
     </form>
 
     <form wire:submit="update">
-        <flux:modal name="update-arrangement" class="md:w-96 space-y-6">
+        <flux:modal name="update-arrangement" class="max-sm:min-w-[21rem] min-w-[40rem] space-y-6">
             <div>
                 <flux:heading size="lg">Editing Arrangement</flux:heading>
             </div>
 
             <x-arrangements.form.fields />
+
+            <x-profile.address.form.fields />
 
             <div class="flex">
                 <flux:spacer />

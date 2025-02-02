@@ -9,7 +9,11 @@ class UserObserver
 {
     public function creating(User $user): void
     {
-        // Make a new address for the user
         $user->address()->save(new Address);
+    }
+
+    public function deleting(User $user): void
+    {
+        $user->address->delete();
     }
 }

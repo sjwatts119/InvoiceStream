@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Arrangement extends Model
 {
@@ -56,6 +56,11 @@ class Arrangement extends Model
         )->distinct();
     }
 
+    public function address(): MorphOne
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
     public function scopeSearch(Builder $query, string $search): Builder
     {
         return $query
@@ -73,28 +78,26 @@ class Arrangement extends Model
     {
         return Attribute::make(
             get: function (): Money {
-                $entries = $this->entries()->uninvoiced()->get();
+                $entries = $this->entries()->notInvoiced()->get();
 
-                $earned = $entries->count() > 0
-                    ? Money::sum(...$entries->map(fn (Entry $entry): Money => $entry->earned))
+                $earnings = $entries->count() > 0
+                    ? Money::sum(...$entries->map(fn (Entry $entry): Money => $entry->earnings))
                     : null;
 
-                return $earned ?? new Money(0, $this->currency);
+                return $earnings ?? new Money(0, $this->currency);
             }
         );
     }
 
-    public function earned(): Attribute
+    public function earnings(): Attribute
     {
-
-
         return Attribute::make(
             get: function (): Money {
-                $earned = $this->entries->isNotEmpty()
-                    ? Money::sum(...$this->entries->map(fn (Entry $entry): Money => $entry->earned))
+                $earnings = $this->entries->isNotEmpty()
+                    ? Money::sum(...$this->entries->map(fn (Entry $entry): Money => $entry->earnings))
                     : null;
 
-                return $earned ?? new Money(0, $this->currency);
+                return $earnings ?? new Money(0, $this->currency);
             }
         );
     }

@@ -42,7 +42,7 @@ class ShowInvoice extends Component
     {
         $this->invoice->load([
             'entries',
-            'arrangement',
+            'arrangement.address',
         ]);
 
         $pdf = Pdf::loadView('components.pdf.invoice', [

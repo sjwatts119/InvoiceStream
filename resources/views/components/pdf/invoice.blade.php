@@ -152,12 +152,10 @@
         <tr>
             <td>
                 <div class="address-block">
-                    {{ $invoice->user->name }}<br>
-                    123 Business Street<br>
-                    City, State 12345<br>
-                    United States<br>
-                    Phone: (555) 123-4567<br>
-                    {{ $invoice->user->email }}
+                    {{ $invoice->arrangement->name }}<br>
+                    @foreach($invoice->arrangement->address->address_lines as $line)
+                        {{ $line }}<br>
+                    @endforeach
                 </div>
             </td>
             <td class="company-details">
@@ -166,12 +164,10 @@
                 <h5>{{ $invoice->created_at->format('D j M, Y') }}</h5>
 
                 <div class="company-address">
-
                     {{ $invoice->user->name }}<br>
                     @foreach($address->address_lines as $line)
                         {{ $line }}<br>
                     @endforeach
-                    {{ $invoice->user->email }}
                 </div>
             </td>
         </tr>
@@ -195,7 +191,7 @@
                 <td>{{ $entry->date->format('j M, Y') }}</td>
                 <td class="text-right">{{ number_format($entry->hours, 2) }}</td>
                 <td class="text-right">{{ $entry->formatted_rate }}</td>
-                <td class="text-right">{{ $entry->earned }}</td>
+                <td class="text-right">{{ $entry->earnings }}</td>
             </tr>
         @endforeach
         </tbody>
