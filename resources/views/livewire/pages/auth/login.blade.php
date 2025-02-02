@@ -34,7 +34,7 @@ new #[Layout('layouts.guest')] class extends Component {
 
         <x-flux::checkbox wire:model="form.remember" :label="__('Remember me')"/>
 
-        <div class="flex items-center justify-end mt-4 space-x-6">
+        <div class="flex items-center justify-end mt-4">
             <flux:button variant="ghost" href="{{ route('register') }}" wire:navigate>
                 {{ __('Register') }}
             </flux:button>
@@ -44,10 +44,12 @@ new #[Layout('layouts.guest')] class extends Component {
                     {{ __('Forgot your password?') }}
                 </x-flux::button>
             @endif
-
+        </div>
+        <div class="flex items-center justify-end mt-4 space-x-6">
             <x-flux::button type="submit">
                 {{ __('Log in') }}
             </x-flux::button>
         </div>
+
     </form>
 </div>
