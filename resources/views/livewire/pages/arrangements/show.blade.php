@@ -77,7 +77,7 @@
                             <flux:row wire:key="entry-{{ $entry->id }}">
                                 <flux:cell>
                                     @if(!$entry->invoiced)
-                                        <flux:checkbox :value="$entry->id" />
+                                        <flux:checkbox :value="$entry->id" :checked="in_array($entry->id, $invoiceForm->entries)" />
                                     @endif
                                 </flux:cell>
                                 <flux:cell>
