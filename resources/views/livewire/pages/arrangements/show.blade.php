@@ -263,6 +263,16 @@
 
             <x-arrangements.form.fields />
 
+            <flux:heading size="lg">Company Details</flux:heading>
+
+            <flux:field>
+                <flux:label badge="Required">Name</flux:label>
+
+                <flux:input required wire:model.live.blur="form.name" />
+
+                <flux:error name="form.name" />
+            </flux:field>
+
             <x-profile.address.form.fields />
 
             <div class="flex">

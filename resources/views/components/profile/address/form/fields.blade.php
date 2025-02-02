@@ -1,13 +1,3 @@
-<flux:heading size="lg">Company Details</flux:heading>
-
-<flux:field>
-    <flux:label badge="Required">Name</flux:label>
-
-    <flux:input required wire:model.live.blur="form.name" />
-
-    <flux:error name="form.name" />
-</flux:field>
-
 <flux:field>
     <flux:label badge="Required">Line 1</flux:label>
 
