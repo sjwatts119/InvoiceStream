@@ -41,7 +41,7 @@ Route::name('invoices.')
     });
 
 Route::view('profile', 'profile')
-    ->middleware(['auth', Permitted::class])
+    ->middleware(['auth'])
     ->name('profile');
 
 require __DIR__ . '/auth.php';
