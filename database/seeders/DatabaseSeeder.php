@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
         Arrangement::factory([
             'user_id' => $user->id,
         ])
-        ->has(Entry::factory()->count(5))
-        ->count(10)
+        ->has(Entry::factory()->count(25))
+        ->count(25)
         ->create();
     }
 }

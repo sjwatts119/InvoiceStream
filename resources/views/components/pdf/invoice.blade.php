@@ -35,7 +35,7 @@
         }
 
         td, th {
-            padding: 16px;
+            padding: 12px;
             border-bottom: 1px solid #f1f1f1;
         }
 
@@ -84,10 +84,13 @@
         }
 
         .items-table {
+            margin-top: 16px;
+            margin-bottom: 16px;
             border-radius: 8px;
             overflow: hidden;
             border-collapse: separate;
             border-spacing: 0;
+            padding: 8px;
         }
 
         .items-table th {
@@ -128,6 +131,8 @@
         }
 
         .section-title {
+            padding-left: 8px;
+            padding-right: 8px;
             font-size: 16px;
             font-weight: bold;
             color: #6b7280;

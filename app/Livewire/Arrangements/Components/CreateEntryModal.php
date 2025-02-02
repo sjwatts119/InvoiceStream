@@ -36,6 +36,7 @@ class CreateEntryModal extends Component
         $this->form->validate();
 
         $this->arrangement->entries()->create($this->form->toArray());
+        $this->arrangement->touch();
 
         $this->dispatch('entry-created');
 

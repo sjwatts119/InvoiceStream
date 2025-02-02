@@ -1,5 +1,12 @@
-<div class="space-y-4">
-    <div class="flex justify-end">
+<div class="space-y-8">
+    <div class="flex gap-4">
+        <div class="flex-grow">
+            <flux:input
+                type="search"
+                placeholder="Search arrangements..."
+                wire:model.live="search"
+            />
+        </div>
         <livewire:arrangements.components.create-arrangement-modal />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -34,5 +41,8 @@
                 </flux:button>
             </flux:card>
         @endforeach
+    </div>
+    <div>
+        {{ $arrangements->links() }}
     </div>
 </div>

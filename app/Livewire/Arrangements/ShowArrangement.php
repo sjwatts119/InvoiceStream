@@ -8,7 +8,6 @@ use App\Models\Arrangement;
 use App\Models\Entry;
 use App\Rules\Arrangement\EnsureNotInvoiced;
 use App\Traits\ValidatesEntries;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Flux\Flux;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
@@ -67,6 +66,8 @@ class ShowArrangement extends Component
 
             Entry::whereIn('id', $this->invoiceForm->entries)
                 ->update(['invoice_id' => $invoice->id]);
+
+            $this->arrangement->touch();
         });
 
         $this->invoiceForm->reset();
