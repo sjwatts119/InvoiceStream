@@ -107,17 +107,21 @@
                                     </flux:badge>
                                 </flux:cell>
                                 <flux:cell>
-                                    @if($entry->invoiced)
-                                        <flux:dropdown>
-                                            <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom" />
+                                    <flux:dropdown>
+                                        <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom" />
 
-                                            <flux:menu>
+                                        <flux:menu>
+                                            @if($entry->invoiced)
                                                 <flux:menu.item icon="eye" :href="route('invoices.show', $entry->invoice->id)">
                                                     View Invoice
                                                 </flux:menu.item>
-                                            </flux:menu>
-                                        </flux:dropdown>
-                                    @endif
+                                            @else
+                                                <flux:menu.item icon="trash" variant="danger" wire:click="deleteEntry('{{ $entry->id }}')">
+                                                    Delete
+                                                </flux:menu.item>
+                                            @endif
+                                        </flux:menu>
+                                    </flux:dropdown>
                                 </flux:cell>
                             </flux:row>
                         @endforeach

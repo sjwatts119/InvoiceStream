@@ -120,6 +120,27 @@ class ShowArrangement extends Component
         );
     }
 
+    public function deleteEntry(Entry $entry): void
+    {
+        $this->authorize('delete', $entry);
+
+        if($entry->invoiced) {
+            Flux::toast(
+                text: 'This entry is already invoiced and cannot be deleted.',
+                variant: 'danger',
+            );
+
+            return;
+        }
+
+        $entry->delete();
+
+        Flux::toast(
+            text: 'Entry deleted successfully',
+            variant: 'success',
+        );
+    }
+
     public function update(): void
     {
         $this->authorize('update', $this->arrangement);
