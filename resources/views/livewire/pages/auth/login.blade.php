@@ -35,6 +35,10 @@ new #[Layout('layouts.guest')] class extends Component {
         <x-flux::checkbox wire:model="form.remember" :label="__('Remember me')"/>
 
         <div class="flex items-center justify-end mt-4 space-x-6">
+            <flux:button variant="ghost" href="{{ route('register') }}" wire:navigate>
+                {{ __('Register') }}
+            </flux:button>
+
             @if (Route::has('password.request'))
                 <x-flux::button variant="ghost" href="{{ route('password.request') }}" wire:navigate>
                     {{ __('Forgot your password?') }}

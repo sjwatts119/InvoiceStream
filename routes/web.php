@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Permitted;
 use App\Livewire\Arrangements\ListArrangements;
 use App\Livewire\Arrangements\ShowArrangement;
 use App\Livewire\Invoices\ShowInvoice;
@@ -9,17 +10,17 @@ use Illuminate\Support\Facades\Route;
 Route::name('arrangements.')
     ->group(function () {
         Route::get('/', ListArrangements::class)
-            ->middleware(['auth', 'verified'])
+            ->middleware(['auth', 'verified', Permitted::class])
             ->name('index');
         Route::get('arrangements/{arrangement}', ShowArrangement::class)
-            ->middleware(['auth', 'verified', 'can:view,arrangement'])
+            ->middleware(['auth', 'verified', 'can:view,arrangement', Permitted::class])
             ->name('show');
-});
+    });
 
 Route::name('invoices.')
     ->group(function () {
         Route::get('invoices/{invoice}', ShowInvoice::class)
-            ->middleware(['auth', 'verified', 'can:view,invoice'])
+            ->middleware(['auth', 'verified', 'can:view,invoice', Permitted::class])
             ->name('show');
 
         Route::get('invoices/{invoice}/preview', [
@@ -35,12 +36,12 @@ Route::name('invoices.')
                 ]);
             },
         ])
-            ->middleware(['auth', 'verified', 'can:view,invoice'])
+            ->middleware(['auth', 'verified', 'can:view,invoice', Permitted::class])
             ->name('preview');
     });
 
 Route::view('profile', 'profile')
-    ->middleware(['auth'])
+    ->middleware(['auth', Permitted::class])
     ->name('profile');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
