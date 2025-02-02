@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    @if($arrangement->entries->isNotEmpty())
+    @if($entries->isNotEmpty())
         <div class="flex gap-4">
             <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Total Earned</flux:subheading>
@@ -39,7 +39,7 @@
             Work Entries
         </flux:heading>
         <div class="flex gap-2">
-            <flux:button :disabled="empty($invoiceForm->entries)"
+            <flux:button :disabled="empty($entries)"
                          icon="document-currency-pound"
                          wire:click="createInvoice">
                 Create Invoice
@@ -48,15 +48,15 @@
         </div>
     </div>
 
-    @if($arrangement->entries->isNotEmpty())
+    @if($entries->isNotEmpty())
         <flux:card>
             <flux:checkbox.group wire:model.live="invoiceForm.entries">
-                <flux:table>
+                <flux:table :paginate="$entries">
                     <flux:columns>
                         <flux:column>
                             <flux:checkbox.all />
                         </flux:column>
-                        <flux:column>Date</flux:column>
+                        <flux:column sortable :sorted="$sortBy === 'date'" :direction="$sortDirection" wire:click="sort('date')">Date</flux:column>
                         <flux:column>Notes</flux:column>
                         <flux:column>Hours</flux:column>
                         <flux:column>Rate</flux:column>
@@ -65,7 +65,7 @@
                     </flux:columns>
 
                     <flux:rows>
-                        @foreach($arrangement->entries as $entry)
+                        @foreach($entries as $entry)
                             <flux:row wire:key="entry-{{ $entry->id }}">
                                 <flux:cell>
                                     @if(!$entry->invoiced)

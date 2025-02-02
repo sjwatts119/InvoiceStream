@@ -18,7 +18,7 @@ class ListArrangements extends Component
 
     public string $search = '';
 
-    public function updatingSearch(): void
+    public function updatedSearch(): void
     {
         $this->resetPage();
     }

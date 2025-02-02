@@ -9,6 +9,7 @@ use App\Models\Entry;
 use App\Rules\Arrangement\EnsureNotInvoiced;
 use App\Traits\ValidatesEntries;
 use Flux\Flux;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
@@ -17,10 +18,12 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 class ShowArrangement extends Component
 {
-    use ValidatesEntries;
+    use ValidatesEntries, WithPagination, WithoutUrlPagination;
 
     #[Locked, Computed]
     public Arrangement $arrangement;
@@ -28,6 +31,10 @@ class ShowArrangement extends Component
     public ArrangementForm $form;
 
     public InvoiceForm $invoiceForm;
+
+    public string $sortBy = 'date';
+
+    public string $sortDirection = 'desc';
 
     #[Validate(['nullable', 'string', 'max:500'])]
     public ?string $notes = '';
@@ -50,6 +57,15 @@ class ShowArrangement extends Component
             text: 'Notes updated successfully',
             variant: 'success',
         );
+    }
+
+    public function sort($column): void {
+        if ($this->sortBy === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $column;
+            $this->sortDirection = 'asc';
+        }
     }
 
     public function createInvoice(): void
@@ -113,15 +129,26 @@ class ShowArrangement extends Component
         );
     }
 
+    protected function getEntries(Arrangement $arrangement): LengthAwarePaginator
+    {
+        return $arrangement->entries()
+            ->tap(function ($query) {
+                return $this->sortBy
+                    ? $query->orderBy($this->sortBy, $this->sortDirection)
+                    : $query;
+            })
+            ->paginate(9);
+    }
+
     #[Layout('layouts.app'), On('entry-created')]
     public function render(): View
     {
-        $this->arrangement->load([
-            'entries' => fn ($query) => $query->orderByDesc('date'),
-            'invoices',
-        ]);
+        $this->arrangement->load('invoices');
 
         return view('livewire.pages.arrangements.show')
-            ->with('arrangement', $this->arrangement);
+            ->with([
+                'arrangement' => $this->arrangement,
+                'entries' => $this->getEntries($this->arrangement),
+            ]);
     }
 }
