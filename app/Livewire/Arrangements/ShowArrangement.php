@@ -58,6 +58,8 @@ class ShowArrangement extends Component
 
     public function updatedNotes(): void
     {
+        $this->authorize('update', $this->arrangement);
+
         $this->validate();
 
         $this->arrangement->notes = $this->notes;
@@ -81,6 +83,8 @@ class ShowArrangement extends Component
 
     public function createInvoice(): void
     {
+        $this->authorize('update', $this->arrangement);
+
         if(!$this->arrangement->address()->exists()) {
             Flux::toast(
                 text: 'Please add an address to the arrangement before creating an invoice.',
@@ -177,16 +181,13 @@ class ShowArrangement extends Component
     public function getInvoices(Arrangement $arrangement): Paginator
     {
         return $arrangement->invoices()
+            ->latest()
             ->simplePaginate($this->invoiceCount);
     }
 
     #[Layout('layouts.app'), On('entry-created')]
     public function render(): View
     {
-        $this->arrangement->load([
-            'invoices' => fn($query) => $query->latest(),
-        ]);
-
         return view('livewire.pages.arrangements.show')
             ->with([
                 'arrangement' => $this->arrangement,
