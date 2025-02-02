@@ -23,6 +23,7 @@ class ShowInvoice extends Component
         ]);
 
         $pdf = Pdf::loadView('components.pdf.invoice', [
+            'address' => auth()->user()->address,
             'invoice' => $this->invoice,
         ]);
 

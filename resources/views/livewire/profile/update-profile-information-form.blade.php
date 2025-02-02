@@ -41,7 +41,10 @@ new class extends Component {
 
         $this->dispatch('profile-updated', name: $user->name);
 
-        Flux::toast(__('Profile updated successfully.'));
+        Flux::toast(
+            text: __('Profile updated successfully.'),
+            variant: 'success',
+        );
     }
 
     /**
@@ -59,7 +62,10 @@ new class extends Component {
 
         $user->sendEmailVerificationNotification();
 
-        Flux::toast(__('A new verification link has been sent to your email address.'));
+        Flux::toast(
+            text: __('A new verification link has been sent to your email address.'),
+            variant: 'success',
+        );
     }
 }; ?>
 

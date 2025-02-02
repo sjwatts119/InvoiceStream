@@ -20,7 +20,10 @@ new #[Layout('layouts.guest')] class extends Component {
 
         Auth::user()->sendEmailVerificationNotification();
 
-        Flux::toast(__('A new verification link has been sent to the email address you provided during registration.'));
+        Flux::toast(
+            text: __('A new verification link has been sent to the email address you provided during registration.'),
+            variant: 'success',
+        );
     }
 
     /**

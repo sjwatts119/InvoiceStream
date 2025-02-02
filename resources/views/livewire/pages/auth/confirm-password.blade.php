@@ -27,7 +27,10 @@ new #[Layout('layouts.guest')] class extends Component {
             ]);
         }
 
-        Flux::toast(__('Password confirmed successfully.'));
+        Flux::toast(
+            text: __('Password confirmed successfully.'),
+            variant: 'success',
+        );
 
         $this->redirectIntended(default: route('arrangements.index', absolute: false), navigate: true);
     }

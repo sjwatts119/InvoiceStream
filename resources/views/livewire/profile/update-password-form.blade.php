@@ -34,7 +34,10 @@ new class extends Component {
 
         $this->reset('current_password', 'password', 'password_confirmation');
 
-        Flux::toast(__('Password updated successfully.'));
+        Flux::toast(
+            text: __('Password updated successfully.'),
+            variant: 'success',
+        );
     }
 }; ?>
 

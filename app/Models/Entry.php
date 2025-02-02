@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cknow\Money\Money;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,16 @@ class Entry extends Model
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
+    }
+
+    public function scopeInvoiced(Builder $query): Builder
+    {
+        return $query->has('invoice');
+    }
+
+    public function scopeUninvoiced(Builder $query): Builder
+    {
+        return $query->doesntHave('invoice');
     }
 
     public function rawTotal(): Attribute

@@ -118,7 +118,7 @@
             <flux:card class="space-y-8">
                 <div>
                     <flux:heading size="lg">
-                        Invoice: {{ $invoice->short_ulid }}
+                        Invoice: #{{ $invoice->short_ulid }}
                     </flux:heading>
 
                     <flux:subheading>

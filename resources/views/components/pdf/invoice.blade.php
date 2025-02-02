@@ -69,9 +69,16 @@
             color: #111827;
             font-size: 16px;
             font-weight: bold;
+            margin-bottom: 4px;
         }
 
-        .company-details pre {
+        .company-details h5 {
+            color: #111827;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+
+        .company-address {
             color: #6b7280;
             line-height: 1.8;
         }
@@ -145,17 +152,22 @@
                     City, State 12345<br>
                     United States<br>
                     Phone: (555) 123-4567<br>
-                    Email: {{ $invoice->user->email }}
+                    {{ $invoice->user->email }}
                 </div>
             </td>
             <td class="company-details">
                 <h3>INVOICE</h3>
                 <h4>#{{ $invoice->short_ulid }}</h4>
+                <h5>{{ $invoice->created_at->format('D j M, Y') }}</h5>
 
-                <pre>
-                    {{ $invoice->created_at->format('D j M, Y') }}
-                    {{ $invoice->user->name }}
-                </pre>
+                <div class="company-address">
+
+                    {{ $invoice->user->name }}<br>
+                    @foreach($address->address_lines as $line)
+                        {{ $line }}<br>
+                    @endforeach
+                    {{ $invoice->user->email }}
+                </div>
             </td>
         </tr>
     </table>
@@ -172,9 +184,9 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($invoice->entries as $index => $entry)
+        @foreach($invoice->entries as $entry)
             <tr>
-                <td>{{ $index + 1 }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $entry->date->format('j M, Y') }}</td>
                 <td class="text-right">{{ number_format($entry->hours, 2) }}</td>
                 <td class="text-right">{{ $entry->formatted_rate }}</td>
