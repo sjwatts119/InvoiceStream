@@ -25,7 +25,6 @@ new #[Layout('layouts.guest')] class extends Component {
 
 <div>
     <form wire:submit="login" class="space-y-6">
-
         <x-flux::input wire:model="form.email" :label="__('Email')" type="email"
                        required autocomplete="username"/>
 

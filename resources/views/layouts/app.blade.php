@@ -15,7 +15,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxStyles
 </head>
-<body class="min-h-screen bg-white dark:bg-zinc-900">
+<body class="min-h-screen bg-zinc-50 dark:bg-zinc-900">
 <livewire:layout.navigation/>
 
 <flux:main container>
