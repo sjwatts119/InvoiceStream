@@ -11,6 +11,7 @@ use App\Rules\Arrangement\EnsureNotInvoiced;
 use App\Traits\ValidatesEntries;
 use Flux\Flux;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
@@ -36,6 +37,8 @@ class ShowArrangement extends Component
     public InvoiceForm $invoiceForm;
 
     public int $rowCount = 10;
+
+    protected int $invoiceCount = 6;
 
     public string $sortBy = 'date';
 
@@ -155,6 +158,11 @@ class ShowArrangement extends Component
         );
     }
 
+    public function loadMoreInvoices(): void
+    {
+        $this->invoiceCount += 6;
+    }
+
     protected function getEntries(Arrangement $arrangement): LengthAwarePaginator
     {
         return $arrangement->entries()
@@ -164,6 +172,12 @@ class ShowArrangement extends Component
                     : $query;
             })
             ->paginate($this->rowCount);
+    }
+
+    public function getInvoices(Arrangement $arrangement): Paginator
+    {
+        return $arrangement->invoices()
+            ->simplePaginate($this->invoiceCount);
     }
 
     #[Layout('layouts.app'), On('entry-created')]
@@ -177,6 +191,7 @@ class ShowArrangement extends Component
             ->with([
                 'arrangement' => $this->arrangement,
                 'entries' => $this->getEntries($this->arrangement),
+                'invoices' => $this->getInvoices($this->arrangement),
             ]);
     }
 }

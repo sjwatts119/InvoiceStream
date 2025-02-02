@@ -145,45 +145,54 @@
         Generated Invoices
     </flux:heading>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        @forelse($arrangement->invoices as $invoice)
-            <flux:card class="space-y-8">
-                <div>
-                    <flux:heading size="lg">
-                        Invoice: #{{ $invoice->short_ulid }}
-                    </flux:heading>
+    @if($invoices->isNotEmpty())
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            @foreach($invoices as $invoice)
+                <flux:card class="space-y-8">
+                    <div>
+                        <flux:heading size="lg">
+                            Invoice: #{{ $invoice->short_ulid }}
+                        </flux:heading>
 
-                    <flux:subheading>
-                        <p>
-                            Total: <span class="font-semibold">
-                                {{ $invoice->total }}
-                            </span>
-                        </p>
-                        <p>
-                            Hours: <span class="font-semibold">
-                                {{ $invoice->hours }}
-                            </span>
-                        </p>
-                        <p>
-                            Generated: <span class="font-semibold">
-                                {{ $invoice->created_at->format('H:i, D j M, Y') }}
-                            </span>
-                        </p>
-                    </flux:subheading>
-                </div>
+                        <flux:subheading>
+                            <p>
+                                Total: <span class="font-semibold">
+                                    {{ $invoice->total }}
+                                </span>
+                            </p>
+                            <p>
+                                Hours: <span class="font-semibold">
+                                    {{ $invoice->hours }}
+                                </span>
+                            </p>
+                            <p>
+                                Generated: <span class="font-semibold">
+                                    {{ $invoice->created_at->format('H:i, D j M, Y') }}
+                                </span>
+                            </p>
+                        </flux:subheading>
+                    </div>
 
-                <div class="w-full">
-                    <flux:button :href="route('invoices.show', $invoice->id)" class="w-full">
-                        View
-                    </flux:button>
-                </div>
-            </flux:card>
-        @empty
-            <flux:heading>
-                No invoices have been created for this arrangement.
-            </flux:heading>
-        @endforelse
-    </div>
+                    <div class="w-full">
+                        <flux:button :href="route('invoices.show', $invoice->id)" class="w-full">
+                            View
+                        </flux:button>
+                    </div>
+                </flux:card>
+            @endforeach
+        </div>
+        @if($invoices->hasMorePages())
+            <div class="flex justify-center">
+                <flux:button wire:click="loadMoreInvoices">
+                    Load More
+                </flux:button>
+            </div>
+        @endif
+    @else
+        <flux:heading>
+            No invoices have been created for this arrangement.
+        </flux:heading>
+    @endif
 
     <flux:heading size="xl">
         Arrangement Notes
