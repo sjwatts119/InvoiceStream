@@ -7,7 +7,7 @@ use Livewire\Form;
 
 class InvoiceNotesForm extends Form
 {
-    public string $notes = '';
+    public ?string $notes = '';
 
     public function rules(): array
     {

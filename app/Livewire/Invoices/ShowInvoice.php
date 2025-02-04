@@ -20,6 +20,11 @@ class ShowInvoice extends Component
 
     public InvoiceNotesForm $form;
 
+    public function mount(): void
+    {
+        $this->form->fill($this->invoice->toArray());
+    }
+
     public function destroy(): void
     {
         $this->authorize('delete', $this->invoice);
