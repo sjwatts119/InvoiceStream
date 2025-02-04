@@ -7,9 +7,16 @@
                 <flux:button icon="chevron-left" variant="ghost" :href="route('arrangements.show', $invoice->arrangement)">
                     Back
                 </flux:button>
-                <flux:button wire:click="download">
+
+                <flux:button wire:click="download" icon="arrow-down">
                     Download
                 </flux:button>
+
+                <flux:modal.trigger name="update-invoice">
+                    <flux:button icon="pencil">
+                        Edit
+                    </flux:button>
+                </flux:modal.trigger>
 
                 <flux:modal.trigger name="delete-invoice">
                     <flux:button variant="danger" icon="trash">Delete</flux:button>
@@ -31,6 +38,26 @@
             </div>
         </div>
     </div>
+
+    <form wire:submit="update">
+        <flux:modal name="update-invoice" class="min-w-[21rem] space-y-6">
+            <div>
+                <flux:heading size="lg">Updating Invoice</flux:heading>
+            </div>
+
+            <flux:textarea wire:model="form.notes" label="Notes" />
+
+            <div class="flex gap-2">
+                <flux:spacer />
+
+                <flux:modal.close>
+                    <flux:button variant="ghost">Cancel</flux:button>
+                </flux:modal.close>
+
+                <flux:button type="submit" variant="primary">Update</flux:button>
+            </div>
+        </flux:modal>
+    </form>
 
     <form wire:submit="destroy">
         <flux:modal name="delete-invoice" class="min-w-[21rem] space-y-6">

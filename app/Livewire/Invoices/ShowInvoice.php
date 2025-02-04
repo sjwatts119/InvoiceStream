@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Invoices;
 
+use App\Livewire\Forms\InvoiceNotesForm;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Flux\Flux;
@@ -17,8 +18,12 @@ class ShowInvoice extends Component
     #[Locked]
     public Invoice $invoice;
 
+    public InvoiceNotesForm $form;
+
     public function destroy(): void
     {
+        $this->authorize('delete', $this->invoice);
+
         $arrangement = $this->invoice->arrangement;
 
         DB::transaction(function () {
@@ -40,6 +45,8 @@ class ShowInvoice extends Component
 
     public function download(): StreamedResponse
     {
+        $this->authorize('view', $this->invoice);
+
         $this->invoice->load([
             'entries',
             'arrangement.address',
@@ -55,6 +62,27 @@ class ShowInvoice extends Component
                 echo $pdf->stream();
             },
             name: "Invoice {$this->invoice->short_ulid}.pdf");
+    }
+
+    public function update(): void
+    {
+        $this->authorize('update', $this->invoice);
+
+        $this->form->validate();
+
+        $this->invoice->update($this->form->toArray());
+
+        Flux::toast(
+            text: 'Invoice updated successfully',
+            variant: 'success',
+        );
+
+        Flux::modal('update-invoice')->close();
+
+        $this->redirect(
+            url: route('invoices.show', $this->invoice->id),
+            navigate: true
+        );
     }
 
     #[Layout('layouts.app')]

@@ -16,6 +16,10 @@ class Invoice extends Model
     use HasFactory;
     use HasUlids;
 
+    protected $fillable = [
+        'notes',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

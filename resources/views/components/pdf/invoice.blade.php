@@ -173,7 +173,19 @@
         </tr>
     </table>
 
+    @if($invoice->notes)
+        <div style="margin-bottom: 32px">
+            <div class="section-title">
+                INVOICE NOTES
+            </div>
+            <div class="address-block" style="padding-left: 8px">
+                {{ $invoice->notes }}
+            </div>
+        </div>
+    @endif
+
     <div class="section-title">TIME ENTRIES</div>
+
     <table class="items-table">
         <thead>
         <tr>
