@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Add notes column to invoices table
         Schema::table('invoices', function (Blueprint $table) {
-            $table->text('notes')->nullable()->after('due_date');
+            $table->text('notes')->nullable()->after('id');
         });
     }
 
