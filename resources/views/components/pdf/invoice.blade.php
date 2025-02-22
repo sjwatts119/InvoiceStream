@@ -197,7 +197,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($invoice->entries as $entry)
+        @foreach($invoice->entries->sortBy('date') as $entry)
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $entry->date->format('j M, Y') }}</td>
