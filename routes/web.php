@@ -26,7 +26,7 @@ Route::name('invoices.')
         Route::get('invoices/{invoice}/preview', [
             function (Invoice $invoice) {
                 $invoice->load([
-                    'entries',
+                    'entries' => fn ($query) => $query->orderByDesc('date'),
                     'arrangement.address',
                 ]);
 
