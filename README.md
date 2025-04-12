@@ -2,7 +2,6 @@
 InvoiceStream provides a simple way to track work arrangements and generate invoices for clients. 
 
 ## Features
-
 - Manages unlimited client arrangements.
 - Records work entries with date, duration and hourly rate specifics.
 - Calculates earnings metrics, including uninvoiced work and total hours.

@@ -20,13 +20,11 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'permitted' => true,
         ]);
 
         User::factory()->create([
             'name' => 'Other User',
             'email' => 'other@example.com',
-            'permitted' => false,
         ]);
 
         $user->address()->update(
