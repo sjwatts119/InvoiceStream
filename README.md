@@ -20,7 +20,7 @@ To run InvoiceStream locally using Laravel Sail, follow these steps:
 6. **Run Database Migration and Seeder:** ```./vendor/bin/sail artisan migrate:fresh --seed```
 7. **Create Storage Symlink:** ```./vendor/bin/sail artisan storage:link```
 8. **Install NPM Dependencies:** ```./vendor/bin/sail npm install```
-9. **Built Frontend Assets:** ```./vendor/bin/sail npm run build```
+9. **Build Frontend Assets:** ```./vendor/bin/sail npm run build```
 10. **Access the Application:** InvoiceStream should now be accessible at 127.0.0.1
 
 ## Maintainers
