@@ -45,24 +45,24 @@ class Invoice extends Model
     public function shortUlid(): Attribute
     {
         return Attribute::make(
-            get: fn(): string => str($this->id)->substr(-12)->upper(),
+            get: fn (): string => str($this->id)->substr(-12)->upper(),
         );
     }
 
     public function total(): Attribute
     {
         return Attribute::make(
-            get: fn(): Money => Money::sum(
+            get: fn (): Money => Money::sum(
                 ...$this->entries->map(
-                fn(Entry $entry): Money => $entry->earnings,
-            )),
+                    fn (Entry $entry): Money => $entry->earnings,
+                )),
         );
     }
 
     public function hours(): Attribute
     {
         return Attribute::make(
-            get: fn(): float => $this->entries->sum('hours'),
+            get: fn (): float => $this->entries->sum('hours'),
         );
     }
 }

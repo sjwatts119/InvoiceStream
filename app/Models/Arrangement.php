@@ -18,8 +18,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 #[ObservedBy(ArrangementObserver::class)]
 class Arrangement extends Model
 {
-    use HasUlids;
     use HasFactory;
+    use HasUlids;
 
     protected $fillable = [
         'id',

@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Entry extends Model
 {
-    use HasUlids;
     use HasFactory;
+    use HasUlids;
 
     protected $fillable = [
         'id',

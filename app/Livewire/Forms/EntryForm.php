@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Forms;
 
-use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class EntryForm extends Form
@@ -31,7 +30,7 @@ class EntryForm extends Form
             $this->rate = null;
         }
 
-        if($this->hours === '') {
+        if ($this->hours === '') {
             $this->hours = null;
         }
 

@@ -5,7 +5,6 @@ namespace App\Livewire\Arrangements;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
@@ -13,8 +12,8 @@ use Livewire\WithPagination;
 
 class ListArrangements extends Component
 {
-    use WithPagination;
     use WithoutUrlPagination;
+    use WithPagination;
 
     public string $search = '';
 

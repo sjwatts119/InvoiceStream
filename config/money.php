@@ -10,7 +10,7 @@ return [
     'defaultCurrency' => config('app.currency', 'GBP'),
     'defaultFormatter' => null,
     'defaultSerializer' => null,
-    'isoCurrenciesPath' => __DIR__ . '/../config/currency.php',
+    'isoCurrenciesPath' => __DIR__.'/../config/currency.php',
     'currencies' => [
         'iso' => 'all',
         'bitcoin' => 'all',

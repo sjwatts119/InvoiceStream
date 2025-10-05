@@ -25,7 +25,7 @@ use Livewire\WithPagination;
 
 class ShowArrangement extends Component
 {
-    use ValidatesEntries, WithPagination, WithoutUrlPagination;
+    use ValidatesEntries, WithoutUrlPagination, WithPagination;
 
     #[Locked]
     public Arrangement $arrangement;
@@ -53,7 +53,7 @@ class ShowArrangement extends Component
 
         $this->notes = $this->arrangement->notes;
 
-        if(!$this->arrangement->address) {
+        if (! $this->arrangement->address) {
             return;
         }
 
@@ -76,7 +76,8 @@ class ShowArrangement extends Component
         );
     }
 
-    public function sort(string $column): void {
+    public function sort(string $column): void
+    {
         if ($this->sortBy === $column) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
@@ -89,7 +90,7 @@ class ShowArrangement extends Component
     {
         $this->authorize('update', $this->arrangement);
 
-        if(!$this->arrangement->address()->exists()) {
+        if (! $this->arrangement->address()->exists()) {
             Flux::toast(
                 text: 'Please add an address to the arrangement before creating an invoice.',
                 variant: 'danger',
@@ -101,7 +102,7 @@ class ShowArrangement extends Component
         $this->invoiceForm->validate([
             'entries' => [
                 ...$this->baseEntryRules(),
-                new EnsureNotInvoiced(),
+                new EnsureNotInvoiced,
             ],
         ]);
 
@@ -126,7 +127,7 @@ class ShowArrangement extends Component
     {
         $this->authorize('delete', $entry);
 
-        if($entry->invoiced) {
+        if ($entry->invoiced) {
             Flux::toast(
                 text: 'This entry is already invoiced and cannot be deleted.',
                 variant: 'danger',
@@ -135,7 +136,7 @@ class ShowArrangement extends Component
             return;
         }
 
-        if(in_array($entry->id, $this->invoiceForm->entries)) {
+        if (in_array($entry->id, $this->invoiceForm->entries)) {
             $this->invoiceForm->entries = array_diff($this->invoiceForm->entries, [$entry->id]);
         }
 
@@ -185,7 +186,7 @@ class ShowArrangement extends Component
 
         $this->redirect(
             url: route('income.index'),
-            navigate:  true,
+            navigate: true,
         );
     }
 

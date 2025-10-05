@@ -12,7 +12,7 @@ class EnsureInvoiced implements ValidationRule
     {
         $entries = Entry::whereIn('id', $value)->get();
 
-        if ($entries->contains(fn (Entry $entry) => !$entry->invoiced)) {
+        if ($entries->contains(fn (Entry $entry) => ! $entry->invoiced)) {
             $fail('One or more entries do not have an invoice.');
         }
     }

@@ -5,7 +5,6 @@ namespace App\Livewire\Arrangements\Components;
 use App\Livewire\Forms\EntryForm;
 use App\Models\Arrangement;
 use Flux\Flux;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;

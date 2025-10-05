@@ -21,7 +21,7 @@ class ArrangementForm extends Form
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'rate' => ['nullable', 'numeric', 'min:0'],
-            'currency' => ['required', 'string', new Currency()],
+            'currency' => ['required', 'string', new Currency],
         ];
     }
 
