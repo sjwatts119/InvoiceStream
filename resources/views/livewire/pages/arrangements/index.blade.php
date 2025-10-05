@@ -1,6 +1,6 @@
 <div class="space-y-8">
     <div class="flex gap-4">
-        <div class="flex-grow">
+        <div class="grow">
             <flux:input
                 type="search"
                 placeholder="Search arrangements..."

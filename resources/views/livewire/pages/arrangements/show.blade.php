@@ -17,21 +17,21 @@
 
     @if($this->entries->isNotEmpty())
         <div class="flex flex-wrap gap-4">
-            <flux:card size="sm" class="min-w-60">
+            <flux:card size="sm" class="min-w-60 px-6! py-6! rounded-xl!">
                 <flux:subheading>Not Yet Invoiced</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
                     {{ $this->arrangement->not_invoiced_earnings }}
                 </flux:heading>
             </flux:card>
-            <flux:card size="sm" class="min-w-60">
+            <flux:card size="sm" class="min-w-60 px-6! py-6! rounded-xl!">
                 <flux:subheading>Total Earnings</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
                     {{ $this->arrangement->earnings }}
                 </flux:heading>
             </flux:card>
-            <flux:card size="sm" class="min-w-60">
+            <flux:card size="sm" class="min-w-60 px-6! py-6! rounded-xl!">
                 <flux:subheading>Total Hours</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
@@ -61,52 +61,52 @@
         <flux:card>
             <flux:checkbox.group wire:model.live="invoiceForm.entries">
                 <flux:table :paginate="$this->entries">
-                    <flux:columns>
-                        <flux:column>
+                    <flux:table.columns>
+                        <flux:table.column>
                             <flux:checkbox.all />
-                        </flux:column>
-                        <flux:column sortable :sorted="$sortBy === 'date'" :direction="$sortDirection" wire:click="sort('date')">Date</flux:column>
-                        <flux:column class="max-sm:hidden">Notes</flux:column>
-                        <flux:column>Hours</flux:column>
-                        <flux:column>Rate</flux:column>
-                        <flux:column>Total</flux:column>
-                        <flux:column>Status</flux:column>
-                        <flux:column />
-                    </flux:columns>
+                        </flux:table.column>
+                        <flux:table.column sortable :sorted="$sortBy === 'date'" :direction="$sortDirection" wire:click="sort('date')">Date</flux:table.column>
+                        <flux:table.column class="max-sm:hidden">Notes</flux:table.column>
+                        <flux:table.column>Hours</flux:table.column>
+                        <flux:table.column>Rate</flux:table.column>
+                        <flux:table.column>Total</flux:table.column>
+                        <flux:table.column>Status</flux:table.column>
+                        <flux:table.column />
+                    </flux:table.columns>
 
-                    <flux:rows>
+                    <flux:table.rows>
                         @foreach($this->entries as $entry)
-                            <flux:row wire:key="entry-{{ $entry->id }}">
-                                <flux:cell>
+                            <flux:table.row wire:key="entry-{{ $entry->id }}">
+                                <flux:table.cell>
                                     @if(!$entry->invoiced)
                                         <flux:checkbox :value="$entry->id" :checked="in_array($entry->id, $invoiceForm->entries)" />
                                     @endif
-                                </flux:cell>
-                                <flux:cell>
+                                </flux:table.cell>
+                                <flux:table.cell>
                                     {{ $entry->date->format('D j M, Y') }}
-                                </flux:cell>
-                                <flux:cell class="max-sm:hidden">
+                                </flux:table.cell>
+                                <flux:table.cell class="max-sm:hidden">
                                     <p class="text-wrap">
                                         {{ $entry->notes ?? 'No notes' }}
                                     </p>
-                                </flux:cell>
-                                <flux:cell>
+                                </flux:table.cell>
+                                <flux:table.cell>
                                     {{ $entry->hours }}
-                                </flux:cell>
-                                <flux:cell>
+                                </flux:table.cell>
+                                <flux:table.cell>
                                     {{ $entry->formatted_rate }} per hour
-                                </flux:cell>
-                                <flux:cell variant="strong">
+                                </flux:table.cell>
+                                <flux:table.cell variant="strong">
                                     {{ $entry->earnings }}
-                                </flux:cell>
-                                <flux:cell>
+                                </flux:table.cell>
+                                <flux:table.cell>
                                     <flux:badge size="sm"
                                                 inset="top bottom"
                                                 :color="$entry->status === 'Invoiced' ? 'green' : 'red'">
                                         {{ $entry->status }}
                                     </flux:badge>
-                                </flux:cell>
-                                <flux:cell>
+                                </flux:table.cell>
+                                <flux:table.cell>
                                     <flux:dropdown>
                                         <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" inset="top bottom" />
 
@@ -122,10 +122,10 @@
                                             @endif
                                         </flux:menu>
                                     </flux:dropdown>
-                                </flux:cell>
-                            </flux:row>
+                                </flux:table.cell>
+                            </flux:table.row>
                         @endforeach
-                    </flux:rows>
+                    </flux:table.rows>
                 </flux:table>
             </flux:checkbox.group>
 
@@ -133,9 +133,9 @@
 
             <div class="flex justify-center mt-4">
                 <flux:select wire:model.live="rowCount" class="max-w-40">
-                    <flux:option value="10">10 Per Page</flux:option>
-                    <flux:option value="25">25 Per Page</flux:option>
-                    <flux:option value="50">50 Per Page</flux:option>
+                    <flux:select.option value="10">10 Per Page</flux:select.option>
+                    <flux:select.option value="25">25 Per Page</flux:select.option>
+                    <flux:select.option value="50">50 Per Page</flux:select.option>
                 </flux:select>
             </div>
         </flux:card>
@@ -208,7 +208,7 @@
     <flux:error name="notes" />
 
     <form wire:submit="destroy">
-        <flux:modal name="delete-arrangement" class="min-w-[21rem] space-y-6">
+        <flux:modal name="delete-arrangement" class="min-w-84 space-y-6">
             <div>
                 <flux:heading size="lg">Delete arrangement?</flux:heading>
                 <flux:subheading>
@@ -234,7 +234,7 @@
     </form>
 
     <form wire:submit="createInvoice">
-        <flux:modal name="create-invoice" class="min-w-[21rem] space-y-6">
+        <flux:modal name="create-invoice" class="min-w-84 space-y-6">
             <div>
                 <flux:heading size="lg">Create invoice?</flux:heading>
                 <flux:subheading>
@@ -260,7 +260,7 @@
     </form>
 
     <form wire:submit="update">
-        <flux:modal name="update-arrangement" class="max-sm:min-w-[21rem] min-w-[40rem] space-y-6">
+        <flux:modal name="update-arrangement" class="max-sm:min-w-84 min-w-160 space-y-6">
             <div>
                 <flux:heading size="lg">Editing Arrangement</flux:heading>
             </div>

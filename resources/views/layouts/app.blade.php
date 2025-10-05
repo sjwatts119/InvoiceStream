@@ -13,7 +13,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxStyles
+    @livewireStyles
+    @fluxAppearance
 </head>
 <body class="min-h-screen bg-zinc-50 dark:bg-zinc-900">
 <livewire:layout.navigation/>
@@ -22,7 +23,9 @@
     {{ $slot }}
 </flux:main>
 @persist('toast')
-<flux:toast/>
+<flux:toast.group>
+    <flux:toast/>
+</flux:toast.group>
 @endpersist
 @fluxScripts
 </body>

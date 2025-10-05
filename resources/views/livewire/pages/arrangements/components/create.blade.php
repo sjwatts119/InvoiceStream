@@ -4,7 +4,7 @@
     </flux:modal.trigger>
 
     <form wire:submit="store">
-        <flux:modal name="create-agreement" class="max-sm:min-w-[21rem] min-w-[40rem] space-y-6">
+        <flux:modal name="create-agreement" class="max-sm:min-w-84 min-w-160 space-y-6">
             <div>
                 <flux:heading size="lg">New Arrangement</flux:heading>
             </div>

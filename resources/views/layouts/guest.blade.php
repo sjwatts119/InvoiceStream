@@ -13,7 +13,7 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxStyles
+    @fluxAppearance
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-zinc-50 dark:bg-zinc-900">
@@ -22,7 +22,7 @@
             <x-application-logo class="w-20 h-20 fill-current text-zinc-500"/>
         </a>
     </div>
-    <flux:card class="mt-6 w-full sm:max-w-md !bg-white dark:!bg-zinc-800">
+    <flux:card class="mt-6 w-full sm:max-w-md bg-white! dark:bg-zinc-800!">
         {{ $slot }}
     </flux:card>
 </div>

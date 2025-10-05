@@ -6,6 +6,10 @@ use App\Livewire\Arrangements\ShowArrangement;
 use App\Livewire\Invoices\ShowInvoice;
 use Illuminate\Support\Facades\Route;
 
+Route::get('test', function () {
+    return view('test');
+});
+
 Route::name('arrangements.')
     ->group(function () {
         Route::get('/', ListArrangements::class)

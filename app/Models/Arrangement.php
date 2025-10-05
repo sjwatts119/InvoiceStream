@@ -37,10 +37,6 @@ class Arrangement extends Model
         'updated_at' => 'datetime',
     ];
 
-    protected $touches = [
-        'arrangement',
-    ];
-
     public function entries(): HasMany
     {
         return $this->hasMany(Entry::class);

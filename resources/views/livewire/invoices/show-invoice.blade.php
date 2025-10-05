@@ -32,7 +32,7 @@
     </div>
 
     <div class="mt-8" x-show="showPreview">
-        <div class="min-w-[32rem] max-w-[48rem] h-full bg-white shadow-lg mx-auto">
+        <div class="min-w-lg max-w-3xl h-full bg-white shadow-lg mx-auto">
             <div class="overflow-hidden">
                 <iframe class="w-full h-screen" src="{{ route('invoices.preview', $invoice) }}" frameborder="0"></iframe>
             </div>
@@ -40,7 +40,7 @@
     </div>
 
     <form wire:submit="update">
-        <flux:modal name="update-invoice" class="min-w-[21rem] space-y-6">
+        <flux:modal name="update-invoice" class="min-w-84 space-y-6">
             <div>
                 <flux:heading size="lg">Updating Invoice</flux:heading>
             </div>
@@ -60,7 +60,7 @@
     </form>
 
     <form wire:submit="destroy">
-        <flux:modal name="delete-invoice" class="min-w-[21rem] space-y-6">
+        <flux:modal name="delete-invoice" class="min-w-84 space-y-6">
             <div>
                 <flux:heading size="lg">Delete invoice?</flux:heading>
                 <flux:subheading>

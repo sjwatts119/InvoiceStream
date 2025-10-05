@@ -9,9 +9,9 @@
             wire:model.live="form.currency"
         >
             @foreach(\Cknow\Money\Money::getISOCurrencies() as $currency)
-                <flux:option>
+                <flux:select.option>
                     {{ $currency['alphabeticCode'] }}
-                </flux:option>
+                </flux:select.option>
 
             @endforeach
         </flux:select>

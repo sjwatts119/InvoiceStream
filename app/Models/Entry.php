@@ -31,6 +31,10 @@ class Entry extends Model
         'updated_at' => 'datetime',
     ];
 
+    protected $touches = [
+        'arrangement',
+    ];
+
     public function arrangement(): BelongsTo
     {
         return $this->belongsTo(Arrangement::class);
