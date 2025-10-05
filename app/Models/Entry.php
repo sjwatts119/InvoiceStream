@@ -18,6 +18,7 @@ class Entry extends Model
     protected $fillable = [
         'id',
         'arrangement_id',
+        'invoice_id',
         'hours',
         'rate',
         'date',

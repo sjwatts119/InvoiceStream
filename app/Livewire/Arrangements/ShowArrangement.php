@@ -27,7 +27,7 @@ class ShowArrangement extends Component
 {
     use ValidatesEntries, WithPagination, WithoutUrlPagination;
 
-    #[Locked, Computed]
+    #[Locked]
     public Arrangement $arrangement;
 
     public ArrangementForm $form;
@@ -50,10 +50,14 @@ class ShowArrangement extends Component
     public function mount(): void
     {
         $this->form->fill($this->arrangement->toArray());
-        if($this->arrangement->address) {
-            $this->addressForm->fill($this->arrangement->address->toArray());
-        }
+
         $this->notes = $this->arrangement->notes;
+
+        if(!$this->arrangement->address) {
+            return;
+        }
+
+        $this->addressForm->fill($this->arrangement->address->toArray());
     }
 
     public function updatedNotes(): void
@@ -72,7 +76,7 @@ class ShowArrangement extends Component
         );
     }
 
-    public function sort($column): void {
+    public function sort(string $column): void {
         if ($this->sortBy === $column) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
@@ -106,8 +110,6 @@ class ShowArrangement extends Component
 
             Entry::whereIn('id', $this->invoiceForm->entries)
                 ->update(['invoice_id' => $invoice->id]);
-
-            $this->arrangement->touch();
         });
 
         $this->invoiceForm->reset();
@@ -192,9 +194,11 @@ class ShowArrangement extends Component
         $this->invoiceCount += 6;
     }
 
-    protected function getEntries(Arrangement $arrangement): LengthAwarePaginator
+    #[Computed]
+    protected function entries(): LengthAwarePaginator
     {
-        return $arrangement->entries()
+        return $this->arrangement
+            ->entries()
             ->tap(function ($query) {
                 return $this->sortBy
                     ? $query->orderBy($this->sortBy, $this->sortDirection)
@@ -203,9 +207,11 @@ class ShowArrangement extends Component
             ->paginate($this->rowCount);
     }
 
-    public function getInvoices(Arrangement $arrangement): Paginator
+    #[Computed]
+    public function invoices(): Paginator
     {
-        return $arrangement->invoices()
+        return $this->arrangement
+            ->invoices()
             ->latest()
             ->simplePaginate($this->invoiceCount);
     }
@@ -213,11 +219,6 @@ class ShowArrangement extends Component
     #[Layout('layouts.app'), On('entry-created')]
     public function render(): View
     {
-        return view('livewire.pages.arrangements.show')
-            ->with([
-                'arrangement' => $this->arrangement,
-                'entries' => $this->getEntries($this->arrangement),
-                'invoices' => $this->getInvoices($this->arrangement),
-            ]);
+        return view('livewire.pages.arrangements.show');
     }
 }

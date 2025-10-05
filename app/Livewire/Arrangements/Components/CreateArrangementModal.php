@@ -22,14 +22,14 @@ class CreateArrangementModal extends Component
         $this->form->validate();
         $this->addressForm->validate();
 
-        $arrangement = null;
-
-        DB::transaction(function () use (&$arrangement) {
+        $arrangement = DB::transaction(function () {
             $arrangement = auth()->user()
                 ->arrangements()
                 ->create($this->form->toArray());
 
             $arrangement->address()->create($this->addressForm->toArray());
+
+            return $arrangement;
         });
 
         Flux::toast(

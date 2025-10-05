@@ -24,7 +24,7 @@ class ListArrangements extends Component
     }
 
     #[Computed]
-    protected function getArrangements(): LengthAwarePaginator
+    protected function arrangements(): LengthAwarePaginator
     {
         return auth()->user()
             ->arrangements()
@@ -36,7 +36,6 @@ class ListArrangements extends Component
     #[Layout('layouts.app'), On('agreement-created')]
     public function render(): View
     {
-        return view('livewire.pages.arrangements.index')
-            ->with('arrangements', $this->getArrangements());
+        return view('livewire.pages.arrangements.index');
     }
 }

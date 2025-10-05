@@ -62,11 +62,13 @@ class ShowInvoice extends Component
             'invoice' => $this->invoice,
         ]);
 
-        return response()->streamDownload(
-            callback: function () use ($pdf) {
-                echo $pdf->stream();
-            },
-            name: "Invoice {$this->invoice->short_ulid}.pdf");
+        return response()
+            ->streamDownload(
+                callback: function () use ($pdf) {
+                    echo $pdf->stream();
+                },
+                name: "Invoice {$this->invoice->short_ulid}.pdf",
+            );
     }
 
     public function update(): void

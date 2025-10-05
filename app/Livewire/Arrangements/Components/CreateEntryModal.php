@@ -22,6 +22,7 @@ class CreateEntryModal extends Component
     public function fillForm(): void
     {
         $this->form->currency = $this->arrangement->currency;
+
         $this->form->fill([
             'rate' => $this->arrangement->rate,
         ]);
@@ -36,10 +37,9 @@ class CreateEntryModal extends Component
     {
         $this->form->validate();
 
-        DB::transaction(function () {
-            $this->arrangement->entries()->create($this->form->toArray());
-            $this->arrangement->touch();
-        });
+        $this->arrangement
+            ->entries()
+            ->create($this->form->toArray());
 
         $this->dispatch('entry-created');
 

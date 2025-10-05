@@ -10,7 +10,7 @@
         <livewire:arrangements.components.create-arrangement-modal />
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        @foreach($arrangements as $arrangement)
+        @foreach($this->arrangements as $arrangement)
             <flux:card class="space-y-6">
                 <div class="space-y-1">
                     <flux:heading size="lg">
@@ -43,6 +43,6 @@
         @endforeach
     </div>
     <div>
-        {{ $arrangements->links() }}
+        {{ $this->arrangements->links() }}
     </div>
 </div>

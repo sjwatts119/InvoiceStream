@@ -1,7 +1,7 @@
 <div class="space-y-8">
     <div class="flex max-md:flex-col gap-4 justify-between md:items-center">
         <flux:heading size="xl">
-            Arrangement: {{ $arrangement->name }}
+            Arrangement: {{ $this->arrangement->name }}
         </flux:heading>
 
         <div class="flex gap-2">
@@ -15,27 +15,27 @@
         </div>
     </div>
 
-    @if($entries->isNotEmpty())
+    @if($this->entries->isNotEmpty())
         <div class="flex flex-wrap gap-4">
             <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Not Yet Invoiced</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
-                    {{ $arrangement->not_invoiced_earnings }}
+                    {{ $this->arrangement->not_invoiced_earnings }}
                 </flux:heading>
             </flux:card>
             <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Total Earnings</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
-                    {{ $arrangement->earnings }}
+                    {{ $this->arrangement->earnings }}
                 </flux:heading>
             </flux:card>
             <flux:card size="sm" class="min-w-60">
                 <flux:subheading>Total Hours</flux:subheading>
 
                 <flux:heading size="xl" class="mb-1">
-                    {{ $arrangement->hours }}
+                    {{ $this->arrangement->hours }}
                 </flux:heading>
             </flux:card>
         </div>
@@ -53,14 +53,14 @@
                 </flux:button>
             </flux:modal.trigger>
 
-            <livewire:arrangements.components.create-entry-modal :$arrangement />
+            <livewire:arrangements.components.create-entry-modal :arrangement="$this->arrangement" />
         </div>
     </div>
 
-    @if($entries->isNotEmpty())
+    @if($this->entries->isNotEmpty())
         <flux:card>
             <flux:checkbox.group wire:model.live="invoiceForm.entries">
-                <flux:table :paginate="$entries">
+                <flux:table :paginate="$this->entries">
                     <flux:columns>
                         <flux:column>
                             <flux:checkbox.all />
@@ -75,7 +75,7 @@
                     </flux:columns>
 
                     <flux:rows>
-                        @foreach($entries as $entry)
+                        @foreach($this->entries as $entry)
                             <flux:row wire:key="entry-{{ $entry->id }}">
                                 <flux:cell>
                                     @if(!$entry->invoiced)
@@ -149,9 +149,9 @@
         Generated Invoices
     </flux:heading>
 
-    @if($invoices->isNotEmpty())
+    @if($this->invoices->isNotEmpty())
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            @foreach($invoices as $invoice)
+            @foreach($this->invoices as $invoice)
                 <flux:card class="space-y-8">
                     <div>
                         <flux:heading size="lg">
@@ -185,7 +185,7 @@
                 </flux:card>
             @endforeach
         </div>
-        @if($invoices->hasMorePages())
+        @if($this->invoices->hasMorePages())
             <div class="flex justify-center">
                 <flux:button wire:click="loadMoreInvoices">
                     Load More
