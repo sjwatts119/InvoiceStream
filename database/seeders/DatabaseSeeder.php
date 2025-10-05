@@ -36,9 +36,9 @@ class DatabaseSeeder extends Seeder
         $arrangements = Arrangement::factory([
             'user_id' => $user->id,
         ])
-        ->has(Entry::factory()->count(25))
-        ->count(25)
-        ->create();
+            ->has(Entry::factory()->count(25))
+            ->count(25)
+            ->create();
 
         $arrangements->each(function (Arrangement $arrangement): void {
             $arrangement->address()->updateOrCreate(

@@ -12,6 +12,7 @@ class Address extends Model
 {
     use HasFactory;
     use HasUlids;
+
     protected $fillable = [
         'line_1',
         'line_2',
@@ -23,14 +24,14 @@ class Address extends Model
     public function addressLines(): Attribute
     {
         return Attribute::make(
-            get: fn(): Collection => collect([
+            get: fn (): Collection => collect([
                 $this->line_1,
                 $this->line_2,
                 $this->city,
                 $this->country,
                 $this->postal_code,
             ])
-            ->filter(),
+                ->filter(),
         );
     }
 }
