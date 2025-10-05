@@ -184,7 +184,7 @@ class ShowArrangement extends Component
         );
 
         $this->redirect(
-            url: route('arrangements.index'),
+            url: route('income.index'),
             navigate:  true,
         );
     }

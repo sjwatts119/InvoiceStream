@@ -21,7 +21,7 @@ test('new users can register', function () {
 
     $component->call('register');
 
-    $component->assertRedirect(route('arrangements.index', absolute: false));
+    $component->assertRedirect(route('income.index', absolute: false));
 
     $this->assertAuthenticated();
 });

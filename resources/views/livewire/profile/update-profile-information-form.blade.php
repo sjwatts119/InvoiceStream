@@ -55,7 +55,7 @@ new class extends Component {
         $user = Auth::user();
 
         if ($user->hasVerifiedEmail()) {
-            $this->redirectIntended(default: route('arrangements.index', absolute: false));
+            $this->redirectIntended(default: route('income.index', absolute: false));
 
             return;
         }

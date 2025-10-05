@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\InvoiceController;
-use App\Livewire\Arrangements\ListArrangements;
 use App\Livewire\Arrangements\ShowArrangement;
 use App\Livewire\Invoices\ShowInvoice;
 use Illuminate\Support\Facades\Route;
 
-Route::get('test', function () {
-    return view('test');
-});
+Route::name('income.')
+    ->group(function () {
+        Route::get('/', [IncomeController::class, 'index'])
+            ->middleware(['auth', 'verified'])
+            ->name('index');
+    });
 
 Route::name('arrangements.')
     ->group(function () {
-        Route::get('/', ListArrangements::class)
-            ->middleware(['auth', 'verified'])
-            ->name('index');
         Route::get('arrangements/{arrangement}', ShowArrangement::class)
             ->middleware(['auth', 'verified', 'can:view,arrangement'])
             ->name('show');

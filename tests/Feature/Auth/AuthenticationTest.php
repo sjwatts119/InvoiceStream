@@ -22,7 +22,7 @@ test('users can authenticate using the login screen', function () {
 
     $component
         ->assertHasNoErrors()
-        ->assertRedirect(route('arrangements.index', absolute: false));
+        ->assertRedirect(route('income.index', absolute: false));
 
     $this->assertAuthenticated();
 });
@@ -48,7 +48,7 @@ test('navigation menu can be rendered', function () {
 
     $this->actingAs($user);
 
-    $response = $this->get('/arrangements.index');
+    $response = $this->get('/income.index');
 
     $response
         ->assertOk()

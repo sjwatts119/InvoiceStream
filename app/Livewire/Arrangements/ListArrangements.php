@@ -33,7 +33,7 @@ class ListArrangements extends Component
             ->paginate(9);
     }
 
-    #[Layout('layouts.app'), On('agreement-created')]
+    #[On('agreement-created')]
     public function render(): View
     {
         return view('livewire.pages.arrangements.index');

@@ -19,10 +19,17 @@ new class extends Component {
     <flux:sidebar.toggle class="lg:hidden" icon="bars-3" inset="left"/>
 
     <flux:navbar class="max-lg:hidden ml-6">
-        <flux:navbar.item icon="home"
-                          :current="request()->routeIs('arrangements.*')"
-                          href="{{ route('arrangements.index') }}">
-            {{ __('Arrangements')}}
+        <flux:navbar.item icon="arrow-down"
+                          :current="request()->routeIs('income.*')"
+                          href="{{ route('income.index') }}">
+            {{ __('Income')}}
+        </flux:navbar.item>
+
+        <flux:navbar.item icon="arrow-up"
+{{--                          :current="request()->routeIs('outgoings.*')"--}}
+{{--                          href="{{ route('outgoings.index') }}"--}}
+        >
+            {{ __('Outgoings')}}
         </flux:navbar.item>
     </flux:navbar>
 
@@ -50,10 +57,17 @@ new class extends Component {
         <flux:sidebar.toggle class="lg:hidden" icon="x-mark"/>
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="home"
-                               :current="request()->routeIs('arrangements.*')"
-                               href="{{ route('arrangements.index') }}">
-                {{__('Arrangements')}}
+            <flux:navlist.item icon="arrow-down"
+                               :current="request()->routeIs('income.*')"
+                               href="{{ route('income.index') }}">
+                {{__('Income')}}
+            </flux:navlist.item>
+
+            <flux:navlist.item icon="arrow-up"
+{{--                               :current="request()->routeIs('income.*')"--}}
+{{--                               href="{{ route('income.index') }}"--}}
+            >
+                {{__('Outgoings')}}
             </flux:navlist.item>
         </flux:navlist>
 
